@@ -151,7 +151,19 @@ public class RunTicketMiner {
                     break;
                 case "b":
                 case"B":
-                    System.out.println("Adding Event");
+                    //Ask for user information
+                    System.out.println("Required Information");
+                    double ID=Math.random();
+                    System.out.println("Enter Name of Event ");
+                    String eventName= sc.nextLine();
+                    System.out.println("Enter date(MM/DD/YYYY");
+                    String eventData=sc.nextLine();
+                    System.out.println("Enter Time (XX:XX)");
+                    String eventTime=sc.nextLine();
+                    System.out.println("AM or PM?");
+                    String eventAM=sc.nextLine();
+                    System.out.println("Which Venue");
+                    String venuInfo=sc.nextLine();
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
