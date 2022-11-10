@@ -10,15 +10,15 @@ public class RunTicketMiner {
     public static void main(String[] args) {
          f = new openFiles();
         typeOfEvent = f.openEventList();
-        typeOfEvent.get("Sport").get("UTEP Football 1").print();
+        //typeOfEvent.get("Sport").get("UTEP Football 1").print();
         System.out.println();
 
         customer = f.openCustomerList();
-        customer.get("aliciajenkins").print();
+       // customer.get("aliciajenkins").print();
         System.out.println();
 
         HashMap<Integer, Venue> venue = f.openVenueList();
-        venue.get(6).print();
+       // venue.get(6).print();
         RunTicketMiner runProgram = new RunTicketMiner();
         runProgram.loginCheck();
     }
