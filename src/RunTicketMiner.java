@@ -1,5 +1,5 @@
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 public class RunTicketMiner {
@@ -37,8 +37,7 @@ public class RunTicketMiner {
                 admin();
             }
             if(customer.containsKey(userInputUsername) && customer.get(userInputUsername).getPassword().equals("Fun!23")){
-                customer.get(userInputUsername).print();
-                System.out.println();
+                purchaseTickets(customer);
             }
             if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
             System.out.println("Exiting System!");
@@ -53,38 +52,77 @@ public class RunTicketMiner {
 
     }
 
-   /* public void purchaseTickets(Customer user){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("What would you like to do?\n\n1. Buy tickets via Event ID");
-        System.out.println("2. View event info via Event ID");
-        String userInput = sc.next();
-        int sportEventID;
-        switch (userInput) {
-            case "1" -> {
-                System.out.print("Please enter an event ID: "); //Implements a check for an event ID
-                sportEventID = sc.nextInt();
-                if (sportEventID > eventArrayList.size() || sportEventID < 0) {
-                    System.out.println("Sorry that Event ID does not exist. Returning to main menu");
-                    break;
-                }
-                user.buyTicket(returnEvent(sportEventID));
+    /**
+     * Purchase Tickets Menu
+     * @param user
+     */
+    public void purchaseTickets(HashMap<String, Customer> user){
+        Scanner input = new Scanner(System.in);
+        int countTickets=0;
+        do {
+            System.out.println("Would you like to confirm ticket purchase? Enter Yes or No.");
+            System.out.println();
+            String confirm = input.nextLine();
+            System.out.println("Enter Event Name (Case Sensitive)");
+           String adminEventInput = input.nextLine();
+            System.out.println("Enter Type of Event (Case Sensitive)\nSport\nConcert\nSpecial");
+            String event_Type=input.nextLine();
+            if (confirm.equalsIgnoreCase("yes")&&typeOfEvent.containsKey(event_Type) && typeOfEvent.get(event_Type).containsKey(adminEventInput)) {
+                System.out.println("Select ticket type");
+                System.out.println();
+                System.out.println("A. VIP");
+                System.out.println("B. Gold: ");
+                System.out.println("C. Silver: ");
+                System.out.println("D. Bronze: ");
+                System.out.println("E. General Admission:");
+                String type = input.nextLine();
+                    if (type.equalsIgnoreCase("a")) {
+                        type = "vip";
+                        countTickets++;
+                    } else if (type.equalsIgnoreCase("b")) {
+                        type = "gold";
+                        countTickets++;
+
+                    } else if (type.equalsIgnoreCase("c")) {
+                        type = "silver";
+                        countTickets++;
+
+                    } else if (type.equalsIgnoreCase("d")) {
+                        type = "bronze";
+                        countTickets++;
+
+                    } else if (type.equalsIgnoreCase("e")) {
+                        type = "general";
+                        countTickets++;
+
+                    }else if(countTickets>6){
+                        System.out.println("Maximum Tickets Purchased");
+                        break;
+                    }
+                    else {
+                        System.out.println("Input not recognized.");
+                    }
+
+                //FIXME implement buy*Type* here (boolean)
+
+                Random rand = new Random();
+                int confNum;
+                do {
+                    confNum = rand.nextInt(100000);
+                } while (typeOfEvent.containsKey(confNum));
+
+
+            } else if (confirm.equalsIgnoreCase("no")) {
+                System.out.println("Purchase Cancelled.");
+                System.out.println();
+            } else {
+                System.out.println("Input not recognized.");
+                System.out.println();
             }
-            case "2" -> {
-                System.out.print("Please enter an event ID: "); //Implements a check for an event ID
-                sportEventID = sc.nextInt();
-                if (sportEventID > eventArrayList.size() || sportEventID < 0) {
-                    System.out.println("Sorry that Event ID does not exist. Returning to main menu");
-                    break;
-                }
-                printInfo(returnEvent(sportEventID), false);
-                purchaseTickets(user);
-            }
-            default -> System.out.println("That is not an option available. Please try again, returning to main menu");
-        }
-        sc.close();
+        } while (true);
     }
 
-    */
+
     /** Admin main menu */
 
     public void admin(){
