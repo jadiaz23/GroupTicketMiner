@@ -26,7 +26,7 @@ public class RunTicketMiner {
         Scanner scan = new Scanner(System.in);
         int authenticate= -1;
         while (authenticate==-1) {
-            System.out.println("Hello\nWelcome to Ticker Miner");
+            System.out.println("Hello\n*****Welcome to Ticker Miner***");
             System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE");
             System.out.println("Username: ");
             String userInputUsername = scan.nextLine();
@@ -37,7 +37,8 @@ public class RunTicketMiner {
                 admin();
             }
             if(customer.containsKey(userInputUsername) && customer.get(userInputUsername).getPassword().equals("Fun!23")){
-
+                customer.get(userInputUsername).print();
+                System.out.println();
             }
             if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
             System.out.println("Exiting System!");
