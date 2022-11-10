@@ -153,7 +153,7 @@ public class RunTicketMiner {
                 case"B":
                     //Ask for user information
                     System.out.println("Required Information");
-                    double ID=Math.random();
+                    double ID=Math.round(Math.random()*10);
                     System.out.println("Enter Name of Event ");
                     String eventName= sc.nextLine();
                     System.out.println("Enter date(MM/DD/YYYY");
@@ -168,10 +168,8 @@ public class RunTicketMiner {
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
                         System.out.println("Exiting admin menu...");
-                    }else{
-                        System.out.println("Please enter an option that is available.");
+                        loginCheck();
                     }
-                    break;
             }
         }
         sc.close();
