@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ public class RunTicketMiner {
     private  static  HashMap<String, Customer> customer = new HashMap<>();
     private  static HashMap<String, Venue> venue = new HashMap<>();
     private static openFiles f;
+    private static final ArrayList<String> transLog = new ArrayList<>();
     public static void main(String[] args) {
          f = new openFiles();
         typeOfEvent = f.openEventList();
@@ -63,17 +65,20 @@ public class RunTicketMiner {
             System.out.println("Would you like to confirm ticket purchase? Enter Yes or No.");
             System.out.println();
             String confirm = input.nextLine();
+            if(confirm.equalsIgnoreCase("no"))
+                break;
             System.out.println("Enter Event Name (Case Sensitive)");
-           String adminEventInput = input.nextLine();
+           String EventInput = input.nextLine();
             System.out.println("Enter Type of Event (Case Sensitive)\nSport\nConcert\nSpecial");
             String event_Type=input.nextLine();
-            if (confirm.equalsIgnoreCase("yes")&&typeOfEvent.containsKey(event_Type) && typeOfEvent.get(event_Type).containsKey(adminEventInput)) {
-                System.out.println("Select ticket type");
+            if (confirm.equalsIgnoreCase("yes")&&typeOfEvent.containsKey(event_Type) && typeOfEvent.get(event_Type).containsKey(EventInput)) {
+                typeOfEvent.get(event_Type).get(EventInput).print();
+                System.out.println("\nSelect ticket type");
                 System.out.println();
                 System.out.println("A. VIP");
-                System.out.println("B. Gold: ");
-                System.out.println("C. Silver: ");
-                System.out.println("D. Bronze: ");
+                System.out.println("B. Gold");
+                System.out.println("C. Silver");
+                System.out.println("D. Bronze");
                 System.out.println("E. General Admission:");
                 String type = input.nextLine();
                     if (type.equalsIgnoreCase("a")) {
@@ -120,6 +125,7 @@ public class RunTicketMiner {
                 System.out.println();
             }
         } while (true);
+        loginCheck();
     }
 
 
@@ -174,4 +180,14 @@ public class RunTicketMiner {
         }
         sc.close();
     }//end of admin
+
+    /**
+     * Saves transaction to ArrayList.
+     *
+     * @param user the customer information
+     * @param ticket contains the purchase information
+     */
+    private static void transLog(Customer user, Ticket ticket) {
+        transLog.add(user.first + " " + user.last + " purchased a " + ticket.type + " ticket for $" + ticket.cost + " Conf#: " + ticket.confNum + "\n");
+    }
 }
