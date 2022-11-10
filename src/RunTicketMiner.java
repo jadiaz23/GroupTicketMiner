@@ -36,14 +36,14 @@ public class RunTicketMiner {
             if((userInputPassword.toLowerCase()).equals("admin") || (userInputUsername.toLowerCase()).equals("admin")){
                 admin();
             }
-            if(customer.containsKey(userInputPassword.toLowerCase()) && customer.containsKey(userInputUsername.toLowerCase())){
+            if(customer.containsKey(userInputUsername) && customer.get(userInputUsername).getPassword().equals("Fun!23")){
 
             }
             if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
             System.out.println("Exiting System!");
             break;
             }
-            System.out.println("*****Information not found please try again******");
+            System.out.println("\n*****Information not found please try again******\n");
 
 
 
@@ -92,7 +92,7 @@ public class RunTicketMiner {
         while (!adminInput.equalsIgnoreCase("exit")) {
             System.out.println("================================================================");
             System.out.println("Hello Administrator! How would you like to inquire an event: ");
-            System.out.println("\n\tA. Inquire via Event Name\n\tB. Create new event\n\tType \"exit\" to exit admin menu");
+            System.out.println("\n\tA. Inquire via Event Name and Type of Event\n\tB. Create new event\n\tType \"exit\" to exit admin menu");
             adminInput = sc.nextLine();
             String adminEventInput;
             switch(adminInput){
