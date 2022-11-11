@@ -28,7 +28,7 @@ public class RunTicketMiner {
         Scanner scan = new Scanner(System.in);
         int authenticate= -1;
         while (authenticate==-1) {
-            System.out.println("Hello\n*****Welcome to Ticker Miner***");
+            System.out.println("Hello\n*****Welcome to Ticker Miner*******");
             System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE");
             System.out.println("Username: ");
             String userInputUsername = scan.nextLine();
@@ -38,12 +38,12 @@ public class RunTicketMiner {
             if((userInputPassword.toLowerCase()).equals("admin") || (userInputUsername.toLowerCase()).equals("admin")){
                 admin();
             }
-            if(customer.containsKey(userInputUsername) && customer.get(userInputUsername).getPassword().equals("Fun!23")){
+            else if(customer.containsKey(userInputUsername) && customer.get(userInputUsername).getPassword().equals(userInputPassword)){
                 purchaseTickets(customer);
             }
-            if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
+            else if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
             System.out.println("Exiting System!");
-            break;
+            System.exit(1);
             }
             System.out.println("\n*****Information not found please try again******\n");
 
@@ -65,8 +65,10 @@ public class RunTicketMiner {
             System.out.println("Would you like to confirm ticket purchase? Enter Yes or No.");
             System.out.println();
             String confirm = input.nextLine();
-            if(confirm.equalsIgnoreCase("no"))
+            if(confirm.equalsIgnoreCase("no")) {
+                loginCheck();
                 break;
+            }
             System.out.println("Enter Event Name (Case Sensitive)");
            String EventInput = input.nextLine();
             System.out.println("Enter Type of Event (Case Sensitive)\nSport\nConcert\nSpecial");
@@ -125,7 +127,6 @@ public class RunTicketMiner {
                 System.out.println();
             }
         } while (true);
-        loginCheck();
     }
 
 
@@ -175,6 +176,8 @@ public class RunTicketMiner {
                     if (adminInput.equalsIgnoreCase("exit")){
                         System.out.println("Exiting admin menu...");
                         loginCheck();
+                        break;
+
                     }
             }
         }
