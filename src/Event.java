@@ -17,6 +17,16 @@ abstract class Event {
     public Venue venue;
     public LinkedHashMap<Integer, Ticket> tickets = new LinkedHashMap<Integer, Ticket>();
 
+    // for EventFactory
+    public Event(String ID, String type, String name, String date, String time, Double generalPrice) {
+        this.ID = Integer.parseInt(ID);
+        this.type = type;
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.generalAdPrice = generalPrice;
+    }
+
     public Event(String ID, String type, String name, String date, String time, String vipPrice, String goldPrice, String silverPrice, String bronzePrice, String generalAdPrice){
         this.ID = Integer.parseInt(ID);
         this.type = type;

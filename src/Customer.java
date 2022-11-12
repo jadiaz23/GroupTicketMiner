@@ -1,6 +1,6 @@
 import java.util.LinkedHashMap;
 
-class Customer {
+class Customer implements Person {
 
     public int ID;
     public String first;
@@ -26,6 +26,12 @@ class Customer {
 
     /////Getters/////
 
+    @Override
+    public boolean login(String login) {
+        return false;
+    }
+
+    @Override
     public int getID(){
         return ID;
     }
@@ -38,10 +44,12 @@ class Customer {
         return last;
     }
 
+    @Override
     public String getUsername(){
         return username;
     }
 
+    @Override
     public String getPassword(){
         return password;
     }
@@ -60,6 +68,7 @@ class Customer {
 
     /////Setters/////
 
+    @Override
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -72,10 +81,12 @@ class Customer {
         this.last = last;
     }
 
+    @Override
     public void setUsername(String username) {
         this.username = username;
     }
 
+    @Override
     public void setPassword(String password){
         this.password = password;
     }

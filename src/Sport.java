@@ -3,6 +3,10 @@
  */
 class Sport extends Event {
 
+    public Sport(String id, String type, String name, String date, String time, Double general) {
+        super(id, type, name, date, time, general);
+    }
+
     /**
      * Instantiates a new Sport.
      *
