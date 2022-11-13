@@ -27,7 +27,7 @@ public class RunTicketMiner2 {
             setVenues(); // sets a venue to the events
         }
 
-        RunTicketMiner runProgram = new RunTicketMiner();
+        RunTicketMiner2 runProgram = new RunTicketMiner2();
         runProgram.loginCheck();
     }
     public void loginCheck(){
