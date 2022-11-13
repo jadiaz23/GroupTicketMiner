@@ -1,7 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class RunTicketMiner {
     private static HashMap<String, HashMap<String, Event>> typeOfEvent = new HashMap<>();
@@ -158,19 +158,85 @@ public class RunTicketMiner {
                     break;
                 case "b":
                 case"B":
-                    //Ask for user information
-                    System.out.println("Required Information");
-                    double ID=Math.round(Math.random()*10);
+                    HashMap<String, String> eventInfo = new HashMap<>();
+                    do {
+
+                        //Ask for user information
+                        System.out.println("Please enter required information.");
+
+                        System.out.println("Please select type of event ");
+                        System.out.println("A. Sport");
+                        System.out.println("B. Concert");
+                        System.out.println("C. Special");                                   //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
+                        adminInput = sc.nextLine();
+
+                        if (adminInput.equalsIgnoreCase("sport")) {
+                            eventInfo.put("type", "Sport");
+                            break;
+                        } else if (adminInput.equalsIgnoreCase("concert")) {
+                            eventInfo.put("type", "Concert");
+                            break;
+                        } else if (adminInput.equalsIgnoreCase("special")) {
+                            eventInfo.put("type", "Special");
+                        } else {
+                            System.out.println("Input not recognized.");
+                        }
+                    } while(true);
+
                     System.out.println("Enter Name of Event ");
                     String eventName= sc.nextLine();
-                    System.out.println("Enter date(MM/DD/YYYY");
-                    String eventData=sc.nextLine();
-                    System.out.println("Enter Time (XX:XX)");
-                    String eventTime=sc.nextLine();
-                    System.out.println("AM or PM?");
-                    String eventAM=sc.nextLine();
+
+                    do {
+                        System.out.println("Enter date(MM/DD/YYYY)");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                        String eventDate = sc.nextLine();
+
+                        try {
+                            dateFormat.parse(eventDate);
+                            eventInfo.put("date", eventDate);
+                            break;
+
+                        } catch (ParseException e) {
+                            System.out.println("Wrong Format");
+                        }
+                    } while(true);
+
+                    do {
+                        System.out.println("Enter Time (XX:XX)");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                        String eventTime = sc.nextLine();
+                        System.out.println("AM or PM?");
+                        String amOrpm = sc.nextLine();
+
+                        if (!amOrpm.equalsIgnoreCase("am") && !amOrpm.equalsIgnoreCase("pm")) {
+                            System.out.println("Input not recognized.");
+                        }
+                        else {
+                            try {
+                                dateFormat.parse(eventTime);
+                                eventInfo.put("time", eventTime + " " + amOrpm);
+                                break;
+
+                            } catch (ParseException e) {
+                                System.out.println("Wrong Format");
+                            }
+                        }
+                    }while (true);
+
+                    //FiXME left off here
                     System.out.println("Which Venue");
-                    String venuInfo=sc.nextLine();
+                    String venueInfo=sc.nextLine();
+                    System.out.println("Please enter General Admission Price. (below $500)");
+                    String genAdmPrice =sc.nextLine();
+
+                    //double ID;
+                    //do {
+                    //     ID =Math.round(Math.random()*10);
+                    //} while (typeOfEvent.containsKey(confNum));
+
+                    //ID =Math.round(Math.random()*10);
+
+                    // construct event
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
