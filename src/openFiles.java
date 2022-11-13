@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -54,7 +56,13 @@ public class openFiles {
     public HashMap<String, Customer> openCustomerList(){
         HashMap<String, Customer> customer = new HashMap<>(); //Key is username
         try {
-            FileReader file = new FileReader("Customer_List_PA1.csv");
+            String customerFile;
+            if (Files.exists(Path.of("New_Customer_ListPA1.csv"))) {
+                customerFile = "New_Customer_ListPA1.csv";
+            } else {
+                customerFile = "Customer_List_PA1.csv";
+            }
+            FileReader file = new FileReader(customerFile);
             Scanner scanning = new Scanner(file);
 
             String line = scanning.nextLine();
