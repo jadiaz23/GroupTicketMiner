@@ -24,21 +24,23 @@ public class Admin implements Person { //FIXME use interface Person for Customer
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
     public void setUsername(String username) {
-
+        username = "admin";
+        this.username = username;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public void setPassword(String password) {
-
+        password = "admin";
+        this.password = password;
     }
 }

@@ -1,4 +1,8 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -15,9 +19,9 @@ import java.util.*;
  * at El Paso and a grade will be assigned for the work I produced.
  */
 public class RunTicketMiner {
-    private static final LinkedHashMap<String, Customer> customerList = new LinkedHashMap<>();
-    private static final LinkedHashMap<String, Event> eventList = new LinkedHashMap<>();
-    private static final LinkedHashMap<String, Venue> venueList = new LinkedHashMap<>();
+    private static LinkedHashMap<String, Customer> customerList = new LinkedHashMap<>();
+    private static LinkedHashMap<String, LinkedHashMap<String, Event>> eventList = new LinkedHashMap<>();
+    private static LinkedHashMap<String, Venue> venueList = new LinkedHashMap<>();
 
     private static final ArrayList<String> transLog = new ArrayList<>();
 
@@ -29,28 +33,42 @@ public class RunTicketMiner {
      */
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
-        readFiles();
-        setVenues();
+
+        openFiles f = new openFiles();
+
+        eventList = f.openEventList();
+        //typeOfEvent.get("Sport").get("UTEP Football 1").print();
+        System.out.println();
+
+        customerList = f.openCustomerList();
+        // customer.get("aliciajenkins").print();
+        System.out.println();
+
+        venueList = f.openVenueList();
+        // venue.get(6).print();
+
+        if (!Files.exists(Path.of("New_Event_List_PA1.csv"))) {
+            setVenues(); // sets a venue to the events
+        }
+
         // Start UI
 
         boolean reenter = true;
         do {
             do {
-                Customer user;
-                System.out.println("Welcome, please enter your first and last name, or \"exit\" to leave.");
-                String name = input.nextLine();
-                if (customerList.containsKey(name.toLowerCase())) {
-                    user = customerList.get(name.toLowerCase());
-                } else if (name.equalsIgnoreCase("exit")) {
+                Person user = loginCheck();
+
+                if (user == null) {
                     reenter = false;
                     break;
-                } else {
-                    System.out.println("User not found.");
+                } else if (Objects.equals(user.getUsername(), "admin")) {
+                    admin();
                     break;
                 }
+                Customer customer = (Customer) user;
                 do {
                     //FIXME view balance
-                    System.out.println("Welcome, " + name + ", would you like to find an event by name or ID? Choose Back to return to the previous selection.");
+                    System.out.println("Welcome, " + customer.first + " " + customer.last + ", would you like to find an event by name or ID? Choose Back to return to the previous selection.");
                     System.out.println();
                     System.out.println("A. Name");
                     System.out.println("B. ID");
@@ -58,11 +76,11 @@ public class RunTicketMiner {
                     String letter = input.nextLine();
                     if (letter.equalsIgnoreCase("A")) {
                         Event event = findWithName(input);
-                        if (transaction(input, user, event)) break;
+                        if (transaction(input, customer, event)) break;
 
                     } else if (letter.equalsIgnoreCase("B")) {
                         Event event = findWithID(input);
-                        if (transaction(input, user, event)) break;
+                        if (transaction(input, customer, event)) break;
 
                     } else if (letter.equalsIgnoreCase("C")) {
                         break;
@@ -73,9 +91,151 @@ public class RunTicketMiner {
             } while (true);
         } while (reenter);
 
-
         writeFile();
 
+    }
+
+    public static void admin(){
+        Scanner sc = new Scanner(System.in);
+        String adminInput = "";
+        while (!adminInput.equalsIgnoreCase("exit")) {
+            System.out.println("================================================================");
+            System.out.println("Hello Administrator! How would you like to inquire an event: ");
+            System.out.println("\n\tA. Inquire via Event Name and Type of Event\n\tB. Create new event\n\tType \"exit\" to exit admin menu");
+            adminInput = sc.nextLine();
+            String adminEventInput;
+            switch(adminInput){
+                case "a":
+                case "A":
+                    System.out.println("Enter Event Name (Case Sensitive)");
+                    adminEventInput = sc.nextLine();
+                    System.out.println("Enter Type of Event (Case Sensitive)");
+                    String event_Type=sc.nextLine();
+                    if (eventList.containsKey(event_Type) && eventList.get(event_Type).containsKey(adminEventInput)){
+                        eventList.get(event_Type).get(adminEventInput).print();
+                        System.out.println();
+                    }
+                    else{
+                        System.out.println("Please try again!");
+                    }
+                    break;
+                case "b":
+                case"B":
+                    HashMap<String, String> eventInfo = new HashMap<>();
+                    do {
+
+                        //Ask for user information
+                        System.out.println("Please enter required information.");
+
+                        System.out.println("Please select type of event ");
+                        System.out.println("A. Sport");
+                        System.out.println("B. Concert");
+                        System.out.println("C. Special");  //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
+                        adminInput = sc.nextLine();
+
+                        if (adminInput.equalsIgnoreCase("sport")) {
+                            eventInfo.put("type", "Sport");
+                            break;
+                        } else if (adminInput.equalsIgnoreCase("concert")) {
+                            eventInfo.put("type", "Concert");
+                            break;
+                        } else if (adminInput.equalsIgnoreCase("special")) {
+                            eventInfo.put("type", "Special");
+                        } else {
+                            System.out.println("Input not recognized.");
+                        }
+                    } while(true);
+
+                    System.out.println("Enter Name of Event ");
+                    String eventName= sc.nextLine();
+
+                    do {
+                        System.out.println("Enter date(MM/DD/YYYY)");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                        String eventDate = sc.nextLine();
+
+                        try {
+                            dateFormat.parse(eventDate);
+                            eventInfo.put("date", eventDate);
+                            break;
+
+                        } catch (ParseException e) {
+                            System.out.println("Wrong Format");
+                        }
+                    } while(true);
+
+                    do {
+                        System.out.println("Enter Time (XX:XX)");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                        String eventTime = sc.nextLine();
+                        System.out.println("AM or PM?");
+                        String amOrpm = sc.nextLine();
+
+                        if (!amOrpm.equalsIgnoreCase("am") && !amOrpm.equalsIgnoreCase("pm")) {
+                            System.out.println("Input not recognized.");
+                        }
+                        else {
+                            try {
+                                dateFormat.parse(eventTime);
+                                eventInfo.put("time", eventTime + " " + amOrpm);
+                                break;
+
+                            } catch (ParseException e) {
+                                System.out.println("Wrong Format");
+                            }
+                        }
+                    }while (true);
+
+                    //FiXME left off here
+                    System.out.println("Which Venue");
+                    String venueInfo=sc.nextLine();
+                    System.out.println("Please enter General Admission Price. (below $500)");
+                    String genAdmPrice =sc.nextLine();
+
+                    //double ID;
+                    //do {
+                    //     ID =Math.round(Math.random()*10);
+                    //} while (typeOfEvent.containsKey(confNum));
+
+                    //ID =Math.round(Math.random()*10);
+
+                    // construct event
+                    break;
+                default:
+                    if (adminInput.equalsIgnoreCase("exit")){
+                        System.out.println("Exiting admin menu...");
+                        loginCheck();
+                        break;
+
+                    }
+            }
+        }
+        sc.close();
+    }//end of admin
+
+    public static Person loginCheck(){
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            System.out.println("Hello\n*****Welcome to Ticker Miner*******");
+            System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE (enter exit for both to leave)");
+            System.out.println("Username: ");
+            String userInputUsername = scan.nextLine();
+            System.out.println("Password: ");
+            String userInputPassword = scan.nextLine();
+            //check if username and password are true
+            if((userInputPassword.toLowerCase()).equals("admin") || (userInputUsername.toLowerCase()).equals("admin")){
+                return new Admin();
+            }
+            else if(customerList.containsKey(userInputUsername) && customerList.get(userInputUsername).getPassword().equals(userInputPassword)){
+                return customerList.get(userInputUsername);
+            }
+            else if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
+                System.out.println("Exiting System!");
+                break;
+            }
+            System.out.println("\n*****Information not found please try again******\n");
+        }
+        return null;
     }
 
     /**
@@ -115,44 +275,53 @@ public class RunTicketMiner {
             System.out.println();
             String confirm = input.nextLine();
             if (confirm.equalsIgnoreCase("yes")) {
-
-                System.out.println("Select ticket type");
-                System.out.println();
-                System.out.println("A. VIP: " + event.vipPrice);
-                System.out.println("B. Gold: " + event.goldPrice);
-                System.out.println("C. Silver: " + event.silverPrice);
-                System.out.println("D. Bronze: " + event.bronzePrice);
-                System.out.println("E. General Admission: " + event.generalPrice);
-                String type = input.nextLine();
-                double typeCost;
-
+                String type;
+                double typeCost = 0;
                 do {
+                    System.out.println("Select ticket type");
+                    System.out.println();
+                    System.out.println("A. VIP: $" + event.vipPrice);
+                    System.out.println("B. Gold: $" + event.goldPrice);
+                    System.out.println("C. Silver: $" + event.silverPrice);
+                    System.out.println("D. Bronze: $" + event.bronzePrice);
+                    System.out.println("E. General Admission: $" + event.generalAdPrice);
+                    type = input.nextLine();
+
+
                     if (type.equalsIgnoreCase("a")) {
                         type = "vip";
-                        typeCost = event.vipPrice;
-                        break;
+                        if (event.venue.BuyVip()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("b")) {
                         type = "gold";
-                        typeCost = event.goldPrice;
-                        break;
+                        if (event.venue.BuyGold()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("c")) {
                         type = "silver";
-                        typeCost = event.silverPrice;
-                        break;
+                        if (event.venue.BuySilver()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("d")) {
                         type = "bronze";
-                        typeCost = event.bronzePrice;
-                        break;
+                        if (event.venue.BuyBronze()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("e")) {
                         type = "general";
-                        typeCost = event.generalPrice;
-                        break;
+                        if (event.venue.BuyGenAdmi()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else {
                         System.out.println("Input not recognized.");
                     }
                 } while (true);
-
-                //FIXME implement buy*Type* here (boolean)
 
                 Random rand = new Random();
                 int confNum;
@@ -177,19 +346,23 @@ public class RunTicketMiner {
      *
      */
     private static void setVenues() {
-        for (Map.Entry<String, Event> entry : eventList.entrySet()) {           // Venue ID numbers
-            Event event = entry.getValue();                                     // 1. Don Haskins Center
-            if (event.type.equalsIgnoreCase("sport")) {              // 2. Sun Bowl Stadium
-                if (event.name.toLowerCase().contains("basketball")) {          // 3. Magoffin Auditorium
-                    event.venue = venueList.get("1");                           // 4. San Jacinto Plaza
-                } else if (event.name.toLowerCase().contains("football")) {     // 5. El Paso County Coliseum
-                    event.venue = venueList.get("2");                           // 6. Centenial Plaza
-                } else {
-                    event.venue = venueList.get("3"); //FIXME add other types
+        for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+            HashMap<String, Event> events = list.getValue();
+            for (Map.Entry<String, Event> entry : events.entrySet()) {              // Venue ID numbers
+                Event event = entry.getValue();                                     // 1. Don Haskins Center
+                if (event.type.equalsIgnoreCase("sport")) {              // 2. Sun Bowl Stadium
+                    if (event.name.toLowerCase().contains("basketball")) {          // 3. Magoffin Auditorium
+                        event.venue = venueList.get("1");                           // 4. San Jacinto Plaza
+                    } else if (event.name.toLowerCase().contains("football")) {     // 5. El Paso County Coliseum
+                        event.venue = venueList.get("2");                           // 6. Centenial Plaza
+                    }
+                } else if (event.type.equalsIgnoreCase("concert")) {
+                    event.venue = venueList.get("3");
+                } else { // Special
+                    event.venue = venueList.get("4");
                 }
             }
         }
-
     }
 
     /**
@@ -206,10 +379,14 @@ public class RunTicketMiner {
 
             if (ID.equalsIgnoreCase("back")) return null;
 
-            if (eventList.get(ID) != null) {
-                Event event = eventList.get(ID);
-                printEvent(event);
-                return event;
+
+            for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                HashMap<String, Event> events = list.getValue();
+                if (events.get(ID) != null) {
+                    Event event = events.get(ID);
+                    printEvent(event);
+                    return event;
+                }
             }
             System.out.println("Event not found.");
         } while (true);
@@ -229,11 +406,14 @@ public class RunTicketMiner {
 
             if (name.equalsIgnoreCase("back")) return null;
 
-            for (Map.Entry<String, Event> entry : eventList.entrySet()) { // FIXME find a better search algorithm
-                Event event = entry.getValue();
-                if (event.name.equalsIgnoreCase(name)) {
-                    printEvent(event);
-                    return event;
+            for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                HashMap<String, Event> events = list.getValue();
+                for (Map.Entry<String, Event> entry : events.entrySet()) {
+                    Event event = entry.getValue();
+                    if (event.name.equalsIgnoreCase(name)) {
+                        printEvent(event);
+                        return event;
+                    }
                 }
             }
             System.out.println("Event not found.");
@@ -261,7 +441,7 @@ public class RunTicketMiner {
      *
      * @throws IOException the io exception
      */
-    public static void readFiles() throws IOException {
+    /*public static void readFiles() throws IOException {
         String[] files = {"Files/Customer_List_PA1.csv", "Files/Event_List_PA1.csv", "Files/Venue_List_PA1.csv"};
 
         for (String var : files) {
@@ -305,7 +485,7 @@ public class RunTicketMiner {
                 }
             }
         }
-    }
+    }*/
 
     /**
      * Saves transaction to ArrayList.
@@ -323,15 +503,33 @@ public class RunTicketMiner {
      * @throws IOException the io exception
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
-        try (FileWriter writer = new FileWriter("Files/newCustomer_List.csv")) {
-            BufferedReader reader = new BufferedReader(new FileReader("Files/Customer_List_PA1.csv"));
+        try (FileWriter writer = new FileWriter("New_Customer_List.csv")) {
+            BufferedReader reader = new BufferedReader(new FileReader("Customer_List_PA1.csv"));
             String header = reader.readLine();
             writer.write(header + "\n");
             for (Customer cust : customerList.values()) {
-                writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + cust.member + "," + cust.purchased.size() + "\n");
+                writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + Boolean.toString(cust.member).toUpperCase() + "," + cust.purchased.size() + "\n");
             }
         }
-        try (FileWriter writer = new FileWriter("Files/Trans_Log.txt")) {
+
+        try (FileWriter writer = new FileWriter("New_Event_List_PA1.csv")) {
+            BufferedReader reader = new BufferedReader(new FileReader("Event_List_PA1.csv"));
+            String header = reader.readLine();
+            writer.write(header + ",Venue ID,Venue name,Venue Type,Capacity,Concert Capacity,Cost,VIP Sold,Gold Sold,Silver Sold,Bronze Sold,General Admission Sold,"+"\n");
+
+            for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                HashMap<String, Event> events = list.getValue();
+                for (Map.Entry<String, Event> entry : events.entrySet()) {
+                    Event event = entry.getValue();
+                    writer.write(event.ID+","+event.type+","+event.name+","+event.date+","+event.time+","+event.vipPrice+","+event.goldPrice+","+event.silverPrice+","+event.bronzePrice+","+event.generalAdPrice+
+                            ","+event.venue.ID+","+event.venue.name+","+event.venue.type+","+event.venue.capacity+","+event.venue.concertCapacity+","+event.venue.cost+","+event.venue.vipSold+","+event.venue.goldSold+
+                            ","+event.venue.silverSold+","+event.venue.bronzeSold+","+event.venue.genAdmiSold+"\n");
+                    //event ID, type, name, date, time, vipPrice-genPrice,
+                }
+            }
+        }
+
+        try (FileWriter writer = new FileWriter("Trans_Log.txt")) {
             for (String trans : transLog) {
                 writer.write(trans);
             }
