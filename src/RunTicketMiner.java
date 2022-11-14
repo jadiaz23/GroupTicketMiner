@@ -276,7 +276,7 @@ public class RunTicketMiner {
             String confirm = input.nextLine();
             if (confirm.equalsIgnoreCase("yes")) {
                 String type;
-                double typeCost;
+                double typeCost = 0;
                 do {
                     System.out.println("Select ticket type");
                     System.out.println();
@@ -290,30 +290,38 @@ public class RunTicketMiner {
 
                     if (type.equalsIgnoreCase("a")) {
                         type = "vip";
-                        typeCost = event.vipPrice;
-                        break;
+                        if (event.venue.BuyVip()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("b")) {
                         type = "gold";
-                        typeCost = event.goldPrice;
-                        break;
+                        if (event.venue.BuyGold()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("c")) {
                         type = "silver";
-                        typeCost = event.silverPrice;
-                        break;
+                        if (event.venue.BuySilver()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("d")) {
                         type = "bronze";
-                        typeCost = event.bronzePrice;
-                        break;
+                        if (event.venue.BuyBronze()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("e")) {
                         type = "general";
-                        typeCost = event.generalAdPrice;
-                        break;
+                        if (event.venue.BuyGenAdmi()){
+                            break;
+                        }
+                        System.out.println("Sold Out");
                     } else {
                         System.out.println("Input not recognized.");
                     }
                 } while (true);
-
-                //FIXME implement buy*Type* here (boolean)
 
                 Random rand = new Random();
                 int confNum;
@@ -507,16 +515,13 @@ public class RunTicketMiner {
         try (FileWriter writer = new FileWriter("New_Event_List_PA1.csv")) {
             BufferedReader reader = new BufferedReader(new FileReader("Event_List_PA1.csv"));
             String header = reader.readLine();
-            writer.write(header + ",Venue ID,Venue name,Venue Type,Capacity,Concert Capacity,Cost,VIP Sold,Gold Sold,Silver Sold,Bronze Sold,General Admission Sold,"+"\n");
+            writer.write(header + "\n");
 
             for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
                 HashMap<String, Event> events = list.getValue();
                 for (Map.Entry<String, Event> entry : events.entrySet()) {
                     Event event = entry.getValue();
-                    writer.write(event.ID+","+event.type+","+event.name+","+event.date+","+event.time+","+event.vipPrice+","+event.goldPrice+","+event.silverPrice+","+event.bronzePrice+","+event.generalAdPrice+
-                            ","+event.venue.ID+","+event.venue.name+","+event.venue.type+","+event.venue.capacity+","+event.venue.concertCapacity+","+event.venue.cost+","+event.venue.vipSold+","+event.venue.goldSold+
-                            ","+event.venue.silverSold+","+event.venue.bronzeSold+","+event.venue.genAdmiSold+"\n");
-                    //event ID, type, name, date, time, vipPrice-genPrice,
+                    writer.write()
                 }
             }
         }
