@@ -220,17 +220,17 @@ abstract class Event {
      */
     public void sellTicket(Ticket ticket) {
         tickets.put(ticket.confNum, ticket);
-        venue.capacity = venue.capacity - 1;
+        this.venue.capacity = venue.capacity - 1;
         if (ticket.type.equalsIgnoreCase("vip")){
-            venue.vipSold = venue.vipSold + 1;
+            this.venue.vipSold = venue.vipSold + 1;
         } else if ((ticket.type.equalsIgnoreCase("gold"))) {
-            venue.goldSold = venue.goldSold + 1;
+            this.venue.goldSold = venue.goldSold + 1;
         } else if ((ticket.type.equalsIgnoreCase("silver"))) {
-            venue.silverSold = venue.silverSold + 1;
+            this.venue.silverSold = venue.silverSold + 1;
         } else if ((ticket.type.equalsIgnoreCase("bronze"))) {
-            venue.bronzeSold = venue.bronzeSold + 1;
+            this.venue.bronzeSold = venue.bronzeSold + 1;
         } else if ((ticket.type.equalsIgnoreCase("general"))) {
-            venue.genAdmiSold = venue.genAdmiSold + 1;
+            this.venue.genAdmiSold = venue.genAdmiSold + 1;
         }
     }
 
