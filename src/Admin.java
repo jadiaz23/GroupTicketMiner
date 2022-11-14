@@ -1,8 +1,6 @@
 public class Admin implements Person { //FIXME use interface Person for Customer and Admin
     public String userType;
     private int ID;
-    private String username;
-    private String password;
 
 
     //FIXME implement methods
@@ -23,24 +21,20 @@ public class Admin implements Person { //FIXME use interface Person for Customer
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public String getUsername() { // always admin
+        return "admin";
     }
 
     @Override
     public void setUsername(String username) {
-        username = "admin";
-        this.username = username;
     }
 
     @Override
-    public String getPassword() {
-        return password;
+    public String getPassword() { // always admin
+        return "admin";
     }
 
     @Override
     public void setPassword(String password) {
-        password = "admin";
-        this.password = password;
     }
 }

@@ -63,7 +63,7 @@ public class RunTicketMiner {
                 if (user == null) {
                     reenter = false;
                     break;
-                } else if (Objects.equals(user.getUsername(), "admin")) {
+                } else if (Objects.equals(user.getUsername(), "admin") && Objects.equals(user.getPassword(), "admin")) { // if it's an Admin object
                     admin();
                     break;
                 }
