@@ -192,28 +192,47 @@ public class RunTicketMiner {
                     //FiXME left off here
                     String venueInfo="";
                     Venue venue;
-                    while(true) {
-                        System.out.println("Which Venue");
-                        venueInfo = sc.nextLine();
-                        if(venueInfo.equalsIgnoreCase("OpenAir") ){
-                            venue=new OpenAir();
-                        }
-                    }
                     System.out.println("Please enter General Admission Price. (below $500)");
                     Double genAdmPrice =sc.nextDouble();
 
                     double ID=Math.round(Math.random()*eventInfo.size());
                     String strID=ID+""; //typecasting the Double to meet parameter to create Event
 
+                    while(true) {
+                        System.out.println("Which Venue");
+                        venueInfo = sc.nextLine();
+                        if(venueInfo.equalsIgnoreCase("OpenAir") ){
+                           // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
+                            venue= new OpenAir(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
+                        break;
+                        }
+                        if(venueInfo.equalsIgnoreCase("Arena") ){
+                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
+                            venue= new Arena(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
+                            break;
+                        }
+                        if(venueInfo.equalsIgnoreCase("Auditorium") ){
+                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
+                            venue= new Auditorium(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
+                            break;
+                        }
+                        if(venueInfo.equalsIgnoreCase("Stadium") ){
+                            // Stadium(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
+                            venue= new Stadium(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
+                            break;
+                        }
+                    }
+
+
                     // construct event
 
                     //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
-                   eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice,  );
+                   eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue );
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
                         System.out.println("Exiting admin menu...");
-                        loginCheck();
+                       // loginCheck();
                         break;
 
                     }
