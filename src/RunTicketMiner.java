@@ -49,6 +49,8 @@ public class RunTicketMiner {
 
         if (!Files.exists(Path.of("New_Event_List_PA1.csv"))) {
             setVenues(); // sets a venue to the events
+        }else{
+            eventList = f.openNewEventList();
         }
 
         // Start UI
@@ -275,7 +277,7 @@ public class RunTicketMiner {
             System.out.println();
             String confirm = input.nextLine();
             if (confirm.equalsIgnoreCase("yes")) {
-                String type;
+                String type = "";
                 double typeCost = 0;
                 do {
                     System.out.println("Select ticket type");
