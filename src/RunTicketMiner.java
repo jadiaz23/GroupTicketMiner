@@ -25,8 +25,6 @@ public class RunTicketMiner {
 
     private static final ArrayList<String> transLog = new ArrayList<>();
 
-    private static openFiles f;
-
     /**
      * The entry point of application.
      *
@@ -36,7 +34,8 @@ public class RunTicketMiner {
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
 
-        f = new openFiles();
+        openFiles f = new openFiles();
+
         eventList = f.openEventList();
         //typeOfEvent.get("Sport").get("UTEP Football 1").print();
         System.out.println();
@@ -497,15 +496,22 @@ public class RunTicketMiner {
      * @throws IOException the io exception
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
+        System.out.println("1"); //FIXME
         try (FileWriter writer = new FileWriter("newCustomer_List.csv")) {
+            System.out.println("2"); //FIXME
             BufferedReader reader = new BufferedReader(new FileReader("Customer_List_PA1.csv"));
+            System.out.println("3"); //FIXME
             String header = reader.readLine();
             writer.write(header + "\n");
+            System.out.println("4"); //FIXME
             for (Customer cust : customerList.values()) {
+                System.out.println("5"); //FIXME
                 writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + cust.member + "," + cust.purchased.size() + "\n");
             }
         }
+        System.out.println("6"); //FIXME
         try (FileWriter writer = new FileWriter("Trans_Log.txt")) {
+            System.out.println("7"); //FIXME
             for (String trans : transLog) {
                 writer.write(trans);
             }
