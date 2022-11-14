@@ -348,18 +348,38 @@ public class RunTicketMiner {
     private static void setVenues() {
         for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
             HashMap<String, Event> events = list.getValue();
-            for (Map.Entry<String, Event> entry : events.entrySet()) {              // Venue ID numbers
-                Event event = entry.getValue();                                     // 1. Don Haskins Center
-                if (event.type.equalsIgnoreCase("sport")) {              // 2. Sun Bowl Stadium
-                    if (event.name.toLowerCase().contains("basketball")) {          // 3. Magoffin Auditorium
-                        event.venue = venueList.get("1");                           // 4. San Jacinto Plaza
-                    } else if (event.name.toLowerCase().contains("football")) {     // 5. El Paso County Coliseum
-                        event.venue = venueList.get("2");                           // 6. Centenial Plaza
+            for (Map.Entry<String, Event> entry : events.entrySet()) {                                                                          // Venue ID numbers
+                Event event = entry.getValue();                                                                                                 // 1. Don Haskins Center
+                if (event.type.equalsIgnoreCase("sport")) {                                                                          // 2. Sun Bowl Stadium
+                    if (event.name.toLowerCase().contains("basketball")) {                                                                      // 3. Magoffin Auditorium
+                        event.venue = new Arena(Integer.toString(venueList.get("1").ID), venueList.get("1").name , venueList.get("1").type,     // 4. San Jacinto Plaza
+                                Integer.toString(venueList.get("1").capacity), Integer.toString(venueList.get("1").concertCapacity),            // 5. El Paso County Coliseum
+                                Double.toString(venueList.get("1").cost), Integer.toString(venueList.get("1").vipPercent),                      // 6. Centenial Plaza
+                                Integer.toString(venueList.get("1").goldPercent), Integer.toString(venueList.get("1").silverPercent),
+                                Integer.toString(venueList.get("1").bronzePercent), Integer.toString(venueList.get("1").generalAdPercent),
+                                Integer.toString(venueList.get("1").reservedExPercent));
+                    } else if (event.name.toLowerCase().contains("football")) {
+                        event.venue = new Stadium(Integer.toString(venueList.get("2").ID), venueList.get("2").name , venueList.get("2").type,
+                                Integer.toString(venueList.get("2").capacity), Integer.toString(venueList.get("2").concertCapacity),
+                                Double.toString(venueList.get("2").cost), Integer.toString(venueList.get("2").vipPercent),
+                                Integer.toString(venueList.get("2").goldPercent), Integer.toString(venueList.get("2").silverPercent),
+                                Integer.toString(venueList.get("2").bronzePercent), Integer.toString(venueList.get("2").generalAdPercent),
+                                Integer.toString(venueList.get("2").reservedExPercent));
                     }
                 } else if (event.type.equalsIgnoreCase("concert")) {
-                    event.venue = venueList.get("3");
+                    event.venue = new Auditorium(Integer.toString(venueList.get("3").ID), venueList.get("3").name , venueList.get("3").type,
+                            Integer.toString(venueList.get("3").capacity), Integer.toString(venueList.get("3").concertCapacity),
+                            Double.toString(venueList.get("3").cost), Integer.toString(venueList.get("3").vipPercent),
+                            Integer.toString(venueList.get("3").goldPercent), Integer.toString(venueList.get("3").silverPercent),
+                            Integer.toString(venueList.get("3").bronzePercent), Integer.toString(venueList.get("3").generalAdPercent),
+                            Integer.toString(venueList.get("3").reservedExPercent));
                 } else { // Special
-                    event.venue = venueList.get("4");
+                    event.venue = new OpenAir(Integer.toString(venueList.get("4").ID), venueList.get("4").name , venueList.get("4").type,
+                            Integer.toString(venueList.get("4").capacity), Integer.toString(venueList.get("4").concertCapacity),
+                            Double.toString(venueList.get("4").cost), Integer.toString(venueList.get("4").vipPercent),
+                            Integer.toString(venueList.get("4").goldPercent), Integer.toString(venueList.get("4").silverPercent),
+                            Integer.toString(venueList.get("4").bronzePercent), Integer.toString(venueList.get("4").generalAdPercent),
+                            Integer.toString(venueList.get("4").reservedExPercent));
                 }
             }
         }
