@@ -92,7 +92,6 @@ public class RunTicketMiner {
             } while (true);
         } while (reenter);
 
-
         writeFile();
 
     }
@@ -220,7 +219,7 @@ public class RunTicketMiner {
         int authenticate= -1;
         while (authenticate==-1) {
             System.out.println("Hello\n*****Welcome to Ticker Miner*******");
-            System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE");
+            System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE (enter exit for both to leave)");
             System.out.println("Username: ");
             String userInputUsername = scan.nextLine();
             System.out.println("Password: ");
@@ -342,14 +341,14 @@ public class RunTicketMiner {
      */
     private static void setVenues() {
         for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
-            HashMap<String, Event> eventList = list.getValue();
-            for (Map.Entry<String, Event> entry : eventList.entrySet()) {           // Venue ID numbers
+            HashMap<String, Event> events = list.getValue();
+            for (Map.Entry<String, Event> entry : events.entrySet()) {              // Venue ID numbers
                 Event event = entry.getValue();                                     // 1. Don Haskins Center
                 if (event.type.equalsIgnoreCase("sport")) {              // 2. Sun Bowl Stadium
                     if (event.name.toLowerCase().contains("basketball")) {          // 3. Magoffin Auditorium
-                        event.venue = venueList.get("1");                               // 4. San Jacinto Plaza
+                        event.venue = venueList.get("1");                           // 4. San Jacinto Plaza
                     } else if (event.name.toLowerCase().contains("football")) {     // 5. El Paso County Coliseum
-                        event.venue = venueList.get("2");                               // 6. Centenial Plaza
+                        event.venue = venueList.get("2");                           // 6. Centenial Plaza
                     }
                 } else if (event.type.equalsIgnoreCase("concert")) {
                     event.venue = venueList.get("3");
@@ -374,10 +373,14 @@ public class RunTicketMiner {
 
             if (ID.equalsIgnoreCase("back")) return null;
 
-            if (eventList.get(ID) != null) {
-                Event event = eventList.get(ID);
-                printEvent(event);
-                return event;
+
+            for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                HashMap<String, Event> events = list.getValue();
+                if (events.get(ID) != null) {
+                    Event event = events.get(ID);
+                    printEvent(event);
+                    return event;
+                }
             }
             System.out.println("Event not found.");
         } while (true);
@@ -397,11 +400,14 @@ public class RunTicketMiner {
 
             if (name.equalsIgnoreCase("back")) return null;
 
-            for (Map.Entry<String, Event> entry : eventList.entrySet()) { // FIXME find a better search algorithm
-                Event event = entry.getValue();
-                if (event.name.equalsIgnoreCase(name)) {
-                    printEvent(event);
-                    return event;
+            for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                HashMap<String, Event> events = list.getValue();
+                for (Map.Entry<String, Event> entry : events.entrySet()) {
+                    Event event = entry.getValue();
+                    if (event.name.equalsIgnoreCase(name)) {
+                        printEvent(event);
+                        return event;
+                    }
                 }
             }
             System.out.println("Event not found.");
@@ -491,15 +497,15 @@ public class RunTicketMiner {
      * @throws IOException the io exception
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
-        try (FileWriter writer = new FileWriter("Files/newCustomer_List.csv")) {
-            BufferedReader reader = new BufferedReader(new FileReader("Files/Customer_List_PA1.csv"));
+        try (FileWriter writer = new FileWriter("newCustomer_List.csv")) {
+            BufferedReader reader = new BufferedReader(new FileReader("Customer_List_PA1.csv"));
             String header = reader.readLine();
             writer.write(header + "\n");
             for (Customer cust : customerList.values()) {
                 writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + cust.member + "," + cust.purchased.size() + "\n");
             }
         }
-        try (FileWriter writer = new FileWriter("Files/Trans_Log.txt")) {
+        try (FileWriter writer = new FileWriter("Trans_Log.txt")) {
             for (String trans : transLog) {
                 writer.write(trans);
             }
