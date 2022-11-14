@@ -1,3 +1,4 @@
+/*
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -59,10 +60,12 @@ public class RunTicketMiner2 {
         }
     }
 
-    /**
+    */
+/**
      * Purchase Tickets Menu
      * @param user
-     */
+     *//*
+
     public void purchaseTickets(HashMap<String, Customer> user){
         Scanner input = new Scanner(System.in);
         int countTickets=0;
@@ -135,7 +138,9 @@ public class RunTicketMiner2 {
     }
 
 
-    /** Admin main menu */
+    */
+/** Admin main menu *//*
+
 
     public void admin(){
         Scanner sc = new Scanner(System.in);
@@ -255,12 +260,14 @@ public class RunTicketMiner2 {
         sc.close();
     }//end of admin
 
-    /**
+    */
+/**
      * Saves transaction to ArrayList.
      *
      * @param user the customer information
      * @param ticket contains the purchase information
-     */
+     *//*
+
     private static void transLog(Customer user, Ticket ticket) {
         transLog.add(user.first + " " + user.last + " purchased a " + ticket.type + " ticket for $" + ticket.cost + " Conf#: " + ticket.confNum + "\n");
     }
@@ -285,3 +292,4 @@ public class RunTicketMiner2 {
         }
     }
 }
+*/

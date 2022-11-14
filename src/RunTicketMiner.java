@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -15,11 +17,13 @@ import java.util.*;
  * at El Paso and a grade will be assigned for the work I produced.
  */
 public class RunTicketMiner {
-    private static final LinkedHashMap<String, Customer> customerList = new LinkedHashMap<>();
-    private static final LinkedHashMap<String, Event> eventList = new LinkedHashMap<>();
-    private static final LinkedHashMap<String, Venue> venueList = new LinkedHashMap<>();
+    private static LinkedHashMap<String, Customer> customerList = new LinkedHashMap<>();
+    private static LinkedHashMap<String, LinkedHashMap<String, Event>> eventList = new LinkedHashMap<>();
+    private static LinkedHashMap<String, Venue> venueList = new LinkedHashMap<>();
 
     private static final ArrayList<String> transLog = new ArrayList<>();
+
+    private static openFiles f;
 
     /**
      * The entry point of application.
@@ -29,19 +33,34 @@ public class RunTicketMiner {
      */
     public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
-        readFiles();
-        setVenues();
+
+        f = new openFiles();
+        eventList = f.openEventList();
+        //typeOfEvent.get("Sport").get("UTEP Football 1").print();
+        System.out.println();
+
+        customerList = f.openCustomerList();
+        // customer.get("aliciajenkins").print();
+        System.out.println();
+
+        venueList = f.openVenueList();
+        // venue.get(6).print();
+
+        if (!Files.exists(Path.of("New_Event_List_PA1.csv"))) {
+            setVenues(); // sets a venue to the events
+        }
+
         // Start UI
 
         boolean reenter = true;
         do {
             do {
                 Customer user;
-                System.out.println("Welcome, please enter your first and last name, or \"exit\" to leave.");
+                System.out.println("Welcome, please enter your username, or \"exit\" to leave.");
                 String name = input.nextLine();
-                if (customerList.containsKey(name.toLowerCase())) {
-                    user = customerList.get(name.toLowerCase());
-                } else if (name.equalsIgnoreCase("exit")) {
+                if () {
+                    user);
+                } else if () {
                     reenter = false;
                     break;
                 } else {
@@ -76,6 +95,35 @@ public class RunTicketMiner {
 
         writeFile();
 
+    }
+
+    public boolean loginCheck(){
+        Scanner scan = new Scanner(System.in);
+        int authenticate= -1;
+        while (authenticate==-1) {
+            System.out.println("Hello\n*****Welcome to Ticker Miner*******");
+            System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE");
+            System.out.println("Username: ");
+            String userInputUsername = scan.nextLine();
+            System.out.println("Password: ");
+            String userInputPassword = scan.nextLine();
+            //check if username and password are true
+            if((userInputPassword.toLowerCase()).equals("admin") || (userInputUsername.toLowerCase()).equals("admin")){
+                admin();
+            }
+            else if(customerList.containsKey(userInputUsername) && List.get(userInputUsername).getPassword().equals(userInputPassword)){
+                purchaseTickets(customer);
+            }
+            else if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
+                System.out.println("Exiting System!");
+                System.exit(1);
+            }
+            System.out.println("\n*****Information not found please try again******\n");
+
+
+
+
+        }
     }
 
     /**
@@ -261,7 +309,7 @@ public class RunTicketMiner {
      *
      * @throws IOException the io exception
      */
-    public static void readFiles() throws IOException {
+    /*public static void readFiles() throws IOException {
         String[] files = {"Files/Customer_List_PA1.csv", "Files/Event_List_PA1.csv", "Files/Venue_List_PA1.csv"};
 
         for (String var : files) {
@@ -305,7 +353,7 @@ public class RunTicketMiner {
                 }
             }
         }
-    }
+    }*/
 
     /**
      * Saves transaction to ArrayList.

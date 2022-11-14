@@ -1,18 +1,18 @@
-import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class openFiles {
     public openFiles(){}
 
-    public HashMap<String, HashMap<String, Event>> openEventList(){ //Key(typeOfEvent, key(nameOfEvent)
-        HashMap<String, HashMap<String, Event>> eventType = new HashMap<>(); //Key is of type Sport, Concert, Special
-        HashMap<String, Event> sport = new HashMap<>(); //Will hold Sport
-        HashMap<String, Event> concert = new HashMap<>(); //hold concert
-        HashMap<String, Event> special = new HashMap<>(); //hold special
+    public LinkedHashMap<String, LinkedHashMap<String, Event>> openEventList(){ //Key(typeOfEvent, key(nameOfEvent)
+        LinkedHashMap<String, LinkedHashMap<String, Event>> eventType = new LinkedHashMap<>(); //Key is of type Sport, Concert, Special
+        LinkedHashMap<String, Event> sport = new LinkedHashMap<>(); //Will hold Sport
+        LinkedHashMap<String, Event> concert = new LinkedHashMap<>(); //hold concert
+        LinkedHashMap<String, Event> special = new LinkedHashMap<>(); //hold special
 
         try {
             FileReader file = new FileReader("Event_List_PA1.csv");
@@ -53,8 +53,8 @@ public class openFiles {
         return eventType;
 }
 
-    public HashMap<String, Customer> openCustomerList(){
-        HashMap<String, Customer> customer = new HashMap<>(); //Key is username
+    public LinkedHashMap<String, Customer> openCustomerList(){
+        LinkedHashMap<String, Customer> customer = new LinkedHashMap<>(); //Key is username
         try {
             String customerFile;
             if (Files.exists(Path.of("New_Customer_ListPA1.csv"))) {
@@ -80,8 +80,8 @@ public class openFiles {
     return customer;
     }
 
-    public HashMap<Integer, Venue> openVenueList(){//Key is the ID of venue
-        HashMap<Integer, Venue> venue = new HashMap<>();
+    public LinkedHashMap<String, Venue> openVenueList(){//Key is the ID of venue
+        LinkedHashMap<String, Venue> venue = new LinkedHashMap<>();
         Venue v;
         try{
             FileReader file = new FileReader("Venue_List_PA1.csv");
@@ -94,22 +94,22 @@ public class openFiles {
                 if(ans[2].equalsIgnoreCase("Arena")){
                     Arena a = new Arena(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9], ans[10], ans[11]);
                     v = a;
-                    venue.put(Integer.parseInt(ans[0]), v);
+                    venue.put(ans[0], v);
                 }
                 else if(ans[2].equalsIgnoreCase("Auditorium")){
                     Auditorium aud = new Auditorium(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9], ans[10], ans[11]);
                     v = aud;
-                    venue.put(Integer.parseInt(ans[0]), v);
+                    venue.put(ans[0], v);
                 }
                 else if(ans[2].equalsIgnoreCase("Open Air")){
                     OpenAir o = new OpenAir(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9], ans[10], ans[11]);
                     v = o;
-                    venue.put(Integer.parseInt(ans[0]), v);
+                    venue.put(ans[0], v);
                 }
                 else if(ans[2].equalsIgnoreCase("Stadium")){
                     Stadium s = new Stadium(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9], ans[10], ans[11]);
                     v = s;
-                    venue.put(Integer.parseInt(ans[0]), v);
+                    venue.put(ans[0], v);
                 }
 
             }
