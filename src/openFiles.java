@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -190,6 +191,21 @@ public class openFiles {
         }
 
         return eventType;
+    }
+
+    public void makeTicketSalesCSV(){
+        try{
+            FileWriter fw = new FileWriter("TicketSales.csv");
+
+            fw.append("Confirmation Number,Event,Venue,Date,Time,Type,Cost");
+            fw.append("\n");
+            fw.close();
+
+        }
+        catch (Exception e){
+
+        }
+
     }
 
 }

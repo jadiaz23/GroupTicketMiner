@@ -1,7 +1,7 @@
 ID,First Name,Last Name,Username,Password,Money Available,TicketMiner Membership,Concerts Purchased
-417,Adam,Bass,adambass,Fun!23,1159697.17,FALSE,2
+417,Adam,Bass,adambass,Fun!23,1159697.17,FALSE,0
 296,Adam,Maldonado,adammaldonado,Fun!23,2484415.98,FALSE,0
-11,Aladdin,Disney,aladdindisney,Fun!23,1329016.97,TRUE,0
+11,Aladdin,Disney,aladdindisney,Fun!23,1329016.97,TRUE,1
 52,Alan,Gamez,alangamez,Fun!23,1702713.65,TRUE,0
 249,Alejandra,Morris,alejandramorris,Fun!23,1570979.69,TRUE,0
 87,Alex,Vega,alexvega,Fun!23,1336987.47,FALSE,0
