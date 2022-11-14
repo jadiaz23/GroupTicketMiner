@@ -98,6 +98,7 @@ public class RunTicketMiner {
     }
 
     public static void admin(){
+        EventFactory eventFactory= new EventFactory();
         Scanner sc = new Scanner(System.in);
         String adminInput = "";
         while (!adminInput.equalsIgnoreCase("exit")) {
@@ -189,19 +190,25 @@ public class RunTicketMiner {
                     }while (true);
 
                     //FiXME left off here
-                    System.out.println("Which Venue");
-                    String venueInfo=sc.nextLine();
+                    String venueInfo="";
+                    Venue venue;
+                    while(true) {
+                        System.out.println("Which Venue");
+                        venueInfo = sc.nextLine();
+                        if(venueInfo.equalsIgnoreCase("OpenAir") ){
+                            venue=new OpenAir();
+                        }
+                    }
                     System.out.println("Please enter General Admission Price. (below $500)");
-                    String genAdmPrice =sc.nextLine();
+                    Double genAdmPrice =sc.nextDouble();
 
-                    //double ID;
-                    //do {
-                    //     ID =Math.round(Math.random()*10);
-                    //} while (typeOfEvent.containsKey(confNum));
-
-                    //ID =Math.round(Math.random()*10);
+                    double ID=Math.round(Math.random()*eventInfo.size());
+                    String strID=ID+""; //typecasting the Double to meet parameter to create Event
 
                     // construct event
+
+                    //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
+                   eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice,  );
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
