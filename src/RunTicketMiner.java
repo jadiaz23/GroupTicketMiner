@@ -228,6 +228,7 @@ public class RunTicketMiner {
 
                     //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
                    eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue );
+
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
