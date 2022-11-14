@@ -11,7 +11,7 @@ class Customer implements Person {
     public boolean member;
     public int tickets;
 
-    public LinkedHashMap<Integer, Ticket> purchased = new LinkedHashMap<Integer, Ticket>();
+    public LinkedHashMap<Integer, Ticket> purchased = new LinkedHashMap<Integer, Ticket>(); //FIXME might not need, Need to implement Ticket summary
 
     public Customer(String ID, String first, String last, String username, String password, String money, String member, String tickets) {
         this.ID = Integer.parseInt(ID);
