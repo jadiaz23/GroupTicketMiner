@@ -341,20 +341,20 @@ public class RunTicketMiner {
      *
      */
     private static void setVenues() {
-        for (Map.Entry<String, HashMap<String, Event>> list : eventList.entrySet()) {
+        for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
             HashMap<String, Event> eventList = list.getValue();
             for (Map.Entry<String, Event> entry : eventList.entrySet()) {           // Venue ID numbers
                 Event event = entry.getValue();                                     // 1. Don Haskins Center
                 if (event.type.equalsIgnoreCase("sport")) {              // 2. Sun Bowl Stadium
                     if (event.name.toLowerCase().contains("basketball")) {          // 3. Magoffin Auditorium
-                        event.venue = venue.get("1");                               // 4. San Jacinto Plaza
+                        event.venue = venueList.get("1");                               // 4. San Jacinto Plaza
                     } else if (event.name.toLowerCase().contains("football")) {     // 5. El Paso County Coliseum
-                        event.venue = venue.get("2");                               // 6. Centenial Plaza
+                        event.venue = venueList.get("2");                               // 6. Centenial Plaza
                     }
                 } else if (event.type.equalsIgnoreCase("concert")) {
-                    event.venue = venue.get("3");
+                    event.venue = venueList.get("3");
                 } else { // Special
-                    event.venue = venue.get("4");
+                    event.venue = venueList.get("4");
                 }
             }
         }
