@@ -434,7 +434,7 @@ public class RunTicketMiner {
                 + " Total revenue for Silver tickets: $" + event.silverRevenue() + "\nTotal revenue for Bronze tickets: $" + event.bronzeRevenue() + "\n"
                 + " Total revenue for General Admission tickets: $" + event.generalRevenue() + "\n" + " Total revenue for all tickets: $" + event.totalRevenue()
                 + "\nExpected profit (Sell Out): $" + event.expectedProfit() + "\n" + " Actual profit: $" + event.profit() + "\n");
-        if(Firework(event) == true){
+        if(Firework(event)){
             System.out.println("This event includes fireworks");
             System.out.println();
         }
