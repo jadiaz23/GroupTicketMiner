@@ -14,6 +14,10 @@ public class openFiles {
         LinkedHashMap<String, Event> concert = new LinkedHashMap<>(); //hold concert
         LinkedHashMap<String, Event> special = new LinkedHashMap<>(); //hold special
 
+        eventType.put("Sport", sport);
+        eventType.put("Concert", concert);
+        eventType.put("Special", special);
+
         try {
             FileReader file = new FileReader("Event_List_PA1.csv");
             Scanner scanning = new Scanner(file);
@@ -23,22 +27,16 @@ public class openFiles {
                 line = scanning.nextLine();
                 String[] ans = line.split(",");
                 if (ans[1].equalsIgnoreCase("Sport")){
-                    Sport typeSport = new Sport(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]);
-                    Event e = typeSport; //e holds type of sport
-                    sport.put(ans[2], e); //Key is name of event
-                    eventType.put("Sport", sport);
+                    Event e = new Sport(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]); //e holds type of sport
+                    sport.put(ans[0], e); //Key is name of event
                 }
                 else if (ans[1].equalsIgnoreCase("Concert")){
-                    Concert typeConcert = new Concert(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]);
-                    Event c = typeConcert; //c holds type Concert
-                    concert.put(ans[2],c); //Key is name of event
-                    eventType.put("Concert", concert);
+                    Event c = new Concert(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]); //c holds type Concert
+                    concert.put(ans[0],c); //Key is name of event
                 }
                 else if (ans[1].equalsIgnoreCase("Special")){
-                    Special typeSpecial = new Special(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]);
-                    Event s = typeSpecial;
-                    special.put(ans[2],s);
-                    eventType.put("Special", special);
+                    Event s = new Special(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]);
+                    special.put(ans[0],s);
                 }
 
 
@@ -112,7 +110,6 @@ public class openFiles {
                     v = s;
                     venue.put(ans[0], v);
                 }
-
             }
 
         }

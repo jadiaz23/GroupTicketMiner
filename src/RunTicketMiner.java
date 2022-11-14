@@ -58,11 +58,11 @@ public class RunTicketMiner {
             do {
                 Person user = loginCheck();
 
-                if (user.getUsername() == "admin") {
-                    admin();
-                    break;
-                } else if (user == null) {
+                if (user == null) {
                     reenter = false;
+                    break;
+                } else if (Objects.equals(user.getUsername(), "admin")) {
+                    admin();
                     break;
                 }
                 Customer customer = (Customer) user;
@@ -215,8 +215,7 @@ public class RunTicketMiner {
 
     public static Person loginCheck(){
         Scanner scan = new Scanner(System.in);
-        int authenticate= -1;
-        while (authenticate==-1) {
+        while (true) {
             System.out.println("Hello\n*****Welcome to Ticker Miner*******");
             System.out.println("Please enter your username and password. \nNote: This is CASE SENSITIVE (enter exit for both to leave)");
             System.out.println("Username: ");
@@ -225,15 +224,14 @@ public class RunTicketMiner {
             String userInputPassword = scan.nextLine();
             //check if username and password are true
             if((userInputPassword.toLowerCase()).equals("admin") || (userInputUsername.toLowerCase()).equals("admin")){
-               Admin admin = new Admin();
-               return admin;
+                return new Admin();
             }
             else if(customerList.containsKey(userInputUsername) && customerList.get(userInputUsername).getPassword().equals(userInputPassword)){
                 return customerList.get(userInputUsername);
             }
             else if((userInputPassword.toLowerCase()).equals("exit") || (userInputUsername.toLowerCase()).equals("exit")) {
                 System.out.println("Exiting System!");
-                System.exit(1);
+                break;
             }
             System.out.println("\n*****Information not found please try again******\n");
         }
@@ -277,18 +275,19 @@ public class RunTicketMiner {
             System.out.println();
             String confirm = input.nextLine();
             if (confirm.equalsIgnoreCase("yes")) {
-
-                System.out.println("Select ticket type");
-                System.out.println();
-                System.out.println("A. VIP: " + event.vipPrice);
-                System.out.println("B. Gold: " + event.goldPrice);
-                System.out.println("C. Silver: " + event.silverPrice);
-                System.out.println("D. Bronze: " + event.bronzePrice);
-                System.out.println("E. General Admission: " + event.generalAdPrice);
-                String type = input.nextLine();
+                String type;
                 double typeCost;
-
                 do {
+                    System.out.println("Select ticket type");
+                    System.out.println();
+                    System.out.println("A. VIP: $" + event.vipPrice);
+                    System.out.println("B. Gold: $" + event.goldPrice);
+                    System.out.println("C. Silver: $" + event.silverPrice);
+                    System.out.println("D. Bronze: $" + event.bronzePrice);
+                    System.out.println("E. General Admission: $" + event.generalAdPrice);
+                    type = input.nextLine();
+
+
                     if (type.equalsIgnoreCase("a")) {
                         type = "vip";
                         typeCost = event.vipPrice;
@@ -496,22 +495,15 @@ public class RunTicketMiner {
      * @throws IOException the io exception
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
-        System.out.println("1"); //FIXME
         try (FileWriter writer = new FileWriter("newCustomer_List.csv")) {
-            System.out.println("2"); //FIXME
             BufferedReader reader = new BufferedReader(new FileReader("Customer_List_PA1.csv"));
-            System.out.println("3"); //FIXME
             String header = reader.readLine();
             writer.write(header + "\n");
-            System.out.println("4"); //FIXME
             for (Customer cust : customerList.values()) {
-                System.out.println("5"); //FIXME
-                writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + cust.member + "," + cust.purchased.size() + "\n");
+                writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + Boolean.toString(cust.member).toUpperCase() + "," + cust.purchased.size() + "\n");
             }
         }
-        System.out.println("6"); //FIXME
         try (FileWriter writer = new FileWriter("Trans_Log.txt")) {
-            System.out.println("7"); //FIXME
             for (String trans : transLog) {
                 writer.write(trans);
             }
