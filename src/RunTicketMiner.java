@@ -495,7 +495,7 @@ public class RunTicketMiner {
      * @throws IOException the io exception
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
-        try (FileWriter writer = new FileWriter("newCustomer_List.csv")) {
+        try (FileWriter writer = new FileWriter("New_Customer_List.csv")) {
             BufferedReader reader = new BufferedReader(new FileReader("Customer_List_PA1.csv"));
             String header = reader.readLine();
             writer.write(header + "\n");
@@ -503,6 +503,21 @@ public class RunTicketMiner {
                 writer.write(cust.ID + "," + cust.first + "," + cust.last + "," + cust.getUsername() + "," + cust.getPassword() + "," + cust.getMoney() + "," + Boolean.toString(cust.member).toUpperCase() + "," + cust.purchased.size() + "\n");
             }
         }
+
+        try (FileWriter writer = new FileWriter("New_Event_List_PA1.csv")) {
+            BufferedReader reader = new BufferedReader(new FileReader("Event_List_PA1.csv"));
+            String header = reader.readLine();
+            writer.write(header + "\n");
+
+            for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                HashMap<String, Event> events = list.getValue();
+                for (Map.Entry<String, Event> entry : events.entrySet()) {
+                    Event event = entry.getValue();
+                    writer.write()
+                }
+            }
+        }
+
         try (FileWriter writer = new FileWriter("Trans_Log.txt")) {
             for (String trans : transLog) {
                 writer.write(trans);
