@@ -227,19 +227,17 @@ public class RunTicketMiner {
                     // construct event
 
                     //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
-                   eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue );
+                   //eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice,  );
 
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
                         System.out.println("Exiting admin menu...");
-                       // loginCheck();
                         break;
 
                     }
             }
         }
-        sc.close();
     }//end of admin
 
     public static Person loginCheck(){
