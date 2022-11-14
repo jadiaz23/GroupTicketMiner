@@ -41,13 +41,14 @@ public class openFiles {
                     eventType.put("Special", special);
                 }
 
+
             }
 
 
 
         }
         catch (Exception e){
-            System.out.println("Rip");
+
         }
 
         return eventType;
@@ -74,7 +75,7 @@ public class openFiles {
 
         }
         catch (Exception e){
-            System.out.println("Rip");
+
         }
 
     return customer;
@@ -116,7 +117,7 @@ public class openFiles {
 
         }
         catch (Exception e){
-            System.out.println("Rip");
+
         }
 
         return venue;
