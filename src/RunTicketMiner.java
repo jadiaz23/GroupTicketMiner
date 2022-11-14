@@ -507,13 +507,16 @@ public class RunTicketMiner {
         try (FileWriter writer = new FileWriter("New_Event_List_PA1.csv")) {
             BufferedReader reader = new BufferedReader(new FileReader("Event_List_PA1.csv"));
             String header = reader.readLine();
-            writer.write(header + "\n");
+            writer.write(header + ",Venue ID,Venue name,Venue Type,Capacity,Concert Capacity,Cost,VIP Sold,Gold Sold,Silver Sold,Bronze Sold,General Admission Sold,"+"\n");
 
             for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
                 HashMap<String, Event> events = list.getValue();
                 for (Map.Entry<String, Event> entry : events.entrySet()) {
                     Event event = entry.getValue();
-                    writer.write()
+                    writer.write(event.ID+","+event.type+","+event.name+","+event.date+","+event.time+","+event.vipPrice+","+event.goldPrice+","+event.silverPrice+","+event.bronzePrice+","+event.generalAdPrice+
+                            ","+event.venue.ID+","+event.venue.name+","+event.venue.type+","+event.venue.capacity+","+event.venue.concertCapacity+","+event.venue.cost+","+event.venue.vipSold+","+event.venue.goldSold+
+                            ","+event.venue.silverSold+","+event.venue.bronzeSold+","+event.venue.genAdmiSold+"\n");
+                    //event ID, type, name, date, time, vipPrice-genPrice,
                 }
             }
         }
