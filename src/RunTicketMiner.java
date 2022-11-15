@@ -98,6 +98,13 @@ public class RunTicketMiner {
         f.writingToTicketSales(customerList);//Testing TicketSales.csv
     }
 
+    /**
+     * @param
+     * @return void
+     * @throws IOException
+     * This methods gives the admin ti either Inquie an even by name and type, create an even, and inspect tickets purchases by customer
+     */
+
     public static void admin() throws IOException {
         EventFactory eventFactory= new EventFactory();
         Scanner sc = new Scanner(System.in);
@@ -260,6 +267,13 @@ public class RunTicketMiner {
         }
     }//end of admin
 
+    /**
+     * This methods creates and writes into a new file called "Customer's name"Tickets.txt
+     * allows for different customer to print these files out, this is called on admin()
+     * @param purchased
+     * @param customer
+     * @throws IOException
+     */
 
     public static void writeCustomerTickets(LinkedHashMap<Integer, Ticket> purchased, Customer customer) throws IOException {
         FileWriter fw = new FileWriter(customer.getFirst()+customer.getLast()+"Tickets.txt");
@@ -281,6 +295,12 @@ public class RunTicketMiner {
         }
     }
 
+    /**This method asks user for UserName and Password,
+     * in order to enter admin, type admin for both inputs
+     * in order to exit just type "exit"
+     * @param
+     * @return Person
+     */
 
     public static Person loginCheck(){
         Scanner scan = new Scanner(System.in);
@@ -416,7 +436,9 @@ public class RunTicketMiner {
 
     /**
      * Sets the venues to the events.
-     *
+     * Combines the information for Venues and Events
+     * @return void
+     * @param
      */
     private static void setVenues() {
         for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
@@ -538,6 +560,11 @@ public class RunTicketMiner {
 
     }
 
+    /**
+     * This method checks the time and decides if fireworks are included or not
+     * @param event
+     * @return boolean
+     */
     private static boolean Firework(Event event) {
         String time = event.getTime();
         int temp = Integer.parseInt(String.valueOf(time.charAt(0)));
@@ -559,9 +586,10 @@ public class RunTicketMiner {
     }
 
     /**
-     * Write file.
-     *
+     * Writes file for New_Customer_List.csv, New_Event_List_PA1.csv,Trans_Log.txt
+     *Reads files for Customer_List_PA1.csv, Event_List_PA1.csv
      * @throws IOException the io exception
+     * @returns void
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
         try (FileWriter writer = new FileWriter("New_Customer_List.csv")) {
