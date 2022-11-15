@@ -99,10 +99,8 @@ public class RunTicketMiner {
     }
 
     /**
-     * @param
-     * @return void
      * @throws IOException
-     * This methods gives the admin ti either Inquie an even by name and type, create an even, and inspect tickets purchases by customer
+     * This method lets the admin inquire an event by name and type, create an event, and inspect tickets purchases by customer
      */
 
     public static void admin() throws IOException {
@@ -270,9 +268,9 @@ public class RunTicketMiner {
     /**
      * This methods creates and writes into a new file called "Customer's name"Tickets.txt
      * allows for different customer to print these files out, this is called on admin()
-     * @param purchased
-     * @param customer
-     * @throws IOException
+     * @param purchased list of tickets purchased by customer
+     * @param customer stores customer information
+     * @throws IOException for writer
      */
 
     public static void writeCustomerTickets(LinkedHashMap<Integer, Ticket> purchased, Customer customer) throws IOException {
@@ -295,10 +293,10 @@ public class RunTicketMiner {
         }
     }
 
-    /**This method asks user for UserName and Password,
+    /**
+     * This method asks user for UserName and Password,
      * in order to enter admin, type admin for both inputs
      * in order to exit just type "exit"
-     * @param
      * @return Person
      */
 
@@ -589,7 +587,6 @@ public class RunTicketMiner {
      * Writes file for New_Customer_List.csv, New_Event_List_PA1.csv,Trans_Log.txt
      *Reads files for Customer_List_PA1.csv, Event_List_PA1.csv
      * @throws IOException the io exception
-     * @returns void
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
         try (FileWriter writer = new FileWriter("New_Customer_List.csv")) {

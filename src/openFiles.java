@@ -224,7 +224,7 @@ public class openFiles {
 
     /**
      *
-     * @param customer
+     * @param customer stores customer info
      * @throws IOException
      * Creates and writes a csv file called "TicketSales" which holds new and
      * current tickets that have been bought
@@ -254,7 +254,7 @@ public class openFiles {
 
     /**
      *
-     * @param customerList
+     * @param customerList stores list of customers
      * @param eventList
      * Reads TicketSales.csv and checks for duplicates in eventList and customerList
      */
