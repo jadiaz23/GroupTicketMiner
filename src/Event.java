@@ -1,23 +1,72 @@
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 
+/**
+ * The type Event.
+ */
 abstract class Event {
 
+    /**
+     * The Id.
+     */
     public int ID;
+    /**
+     * The Type.
+     */
     public String type;
+    /**
+     * The Name.
+     */
     public String name;
+    /**
+     * The Date.
+     */
     public String date;
+    /**
+     * The Time.
+     */
     public String time;
+    /**
+     * The Vip price.
+     */
     public double vipPrice;
+    /**
+     * The Gold price.
+     */
     public double goldPrice;
+    /**
+     * The Silver price.
+     */
     public double silverPrice;
+    /**
+     * The Bronze price.
+     */
     public double bronzePrice;
+    /**
+     * The General ad price.
+     */
     public double generalAdPrice;
 
+    /**
+     * The Venue.
+     */
     public Venue venue;
+    /**
+     * The Tickets.
+     */
     public LinkedHashMap<Integer, Ticket> tickets = new LinkedHashMap<Integer, Ticket>();
 
-    // for EventFactory
+    /**
+     * Instantiates a new Event.
+     *
+     * @param ID           the id
+     * @param type         the type
+     * @param name         the name
+     * @param date         the date
+     * @param time         the time
+     * @param generalPrice the general price
+     */
+// for EventFactory
     public Event(String ID, String type, String name, String date, String time, Double generalPrice) {
         this.ID = Integer.parseInt(ID);
         this.type = type;
@@ -27,6 +76,20 @@ abstract class Event {
         this.generalAdPrice = generalPrice;
     }
 
+    /**
+     * Instantiates a new Event.
+     *
+     * @param ID             the id
+     * @param type           the type
+     * @param name           the name
+     * @param date           the date
+     * @param time           the time
+     * @param vipPrice       the vip price
+     * @param goldPrice      the gold price
+     * @param silverPrice    the silver price
+     * @param bronzePrice    the bronze price
+     * @param generalAdPrice the general ad price
+     */
     public Event(String ID, String type, String name, String date, String time, String vipPrice, String goldPrice, String silverPrice, String bronzePrice, String generalAdPrice){
         this.ID = Integer.parseInt(ID);
         this.type = type;
@@ -44,84 +107,184 @@ abstract class Event {
 
     /////Getters/////
 
+    /**
+     * Get id int.
+     *
+     * @return the int
+     */
     public int getID(){
         return ID;
     }
 
+    /**
+     * Get type string.
+     *
+     * @return the string
+     */
     public String getType(){
         return type;
     }
 
+    /**
+     * Get name string.
+     *
+     * @return the string
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Get date string.
+     *
+     * @return the string
+     */
     public String getDate(){
         return date;
     }
 
+    /**
+     * Get time string.
+     *
+     * @return the string
+     */
     public String getTime(){
         return time;
     }
 
+    /**
+     * Get vip price double.
+     *
+     * @return the double
+     */
     public double getVipPrice(){
         return vipPrice;
     }
 
+    /**
+     * Get gold price double.
+     *
+     * @return the double
+     */
     public double getGoldPrice(){
         return goldPrice;
     }
 
+    /**
+     * Get silver price double.
+     *
+     * @return the double
+     */
     public double getSilverPrice(){
         return silverPrice;
     }
 
+    /**
+     * Get bronze price double.
+     *
+     * @return the double
+     */
     public double getBronzePrice(){
         return bronzePrice;
     }
 
+    /**
+     * Get general ad price double.
+     *
+     * @return the double
+     */
     public double getGeneralAdPrice(){
         return generalAdPrice;
     }
 
     /////Setters/////
 
+    /**
+     * Sets id.
+     *
+     * @param ID the id
+     */
     public void setID(int ID) {
         this.ID = ID;
     }
 
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * Sets time.
+     *
+     * @param time the time
+     */
     public void setTime(String time) {
         this.time = time;
     }
 
+    /**
+     * Sets vip price.
+     *
+     * @param vipPrice the vip price
+     */
     public void setVipPrice(double vipPrice) {
         this.vipPrice = vipPrice;
     }
 
+    /**
+     * Sets gold price.
+     *
+     * @param goldPrice the gold price
+     */
     public void setGoldPrice(double goldPrice) {
         this.goldPrice = goldPrice;
     }
 
+    /**
+     * Sets silver price.
+     *
+     * @param silverPrice the silver price
+     */
     public void setSilverPrice(double silverPrice) {
         this.silverPrice = silverPrice;
     }
 
+    /**
+     * Sets bronze price.
+     *
+     * @param bronzePrice the bronze price
+     */
     public void setBronzePrice(double bronzePrice) {
         this.bronzePrice = bronzePrice;
     }
 
+    /**
+     * Sets general ad price.
+     *
+     * @param generalAdPrice the general ad price
+     */
     public void setGeneralAdPrice(double generalAdPrice) {
         this.generalAdPrice = generalAdPrice;
     }
@@ -222,6 +385,9 @@ abstract class Event {
         this.venue.capacity = venue.capacity - 1;
     }
 
+    /**
+     * Print.
+     */
     public void print(){
         System.out.println("ID: "+getID());
         System.out.println("Sport type: "+getType());

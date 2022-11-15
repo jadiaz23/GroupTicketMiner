@@ -3,7 +3,19 @@
  */
 public class EventFactory {
 
-    // get input from admin and create event
+    /**
+     * Create event.
+     *
+     * @param id       the id
+     * @param type     the type
+     * @param name     the name
+     * @param date     the date
+     * @param time     the time
+     * @param genPrice the gen price
+     * @param venue    the venue
+     * @return the event
+     */
+// get input from admin and create event
     // venue should already be initialized
     public Event createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue) {
         Event event;
