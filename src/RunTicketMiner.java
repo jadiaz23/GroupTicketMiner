@@ -225,10 +225,8 @@ public class RunTicketMiner {
 
 
                     // construct event
-
                     //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
-                   //eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice,  );
-
+                    eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue);
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
@@ -496,64 +494,11 @@ public class RunTicketMiner {
         String time = event.getTime();
         int temp = Integer.parseInt(String.valueOf(time.charAt(0)));
         char zone = time.charAt(time.length()-2);
-        char noon = 'P';
+        String z = String.valueOf(zone);
+        String noon = "p";
 
-        if((temp >= 7) && (zone == noon)){
-            return true;
-        }
-        return false;
+        return (temp >= 7) && (z.equalsIgnoreCase(noon));
     }
-
-    /**
-     * Read files.
-     *
-     * @throws IOException the io exception
-     */
-    /*public static void readFiles() throws IOException {
-        String[] files = {"Files/Customer_List_PA1.csv", "Files/Event_List_PA1.csv", "Files/Venue_List_PA1.csv"};
-
-        for (String var : files) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(var))) {
-                String header = reader.readLine();
-                String info = reader.readLine();
-                String[] splitHeader = header.split(",");
-
-                while (info != null) {
-                    HashMap<String, String> temp = new HashMap<>();
-                    String[] splitInfo = info.split(",");
-                    int i = 0;
-                    for (String label : splitHeader) {
-                        temp.put(label.toLowerCase(), splitInfo[i]); // adds header as key to values
-                        ++i;
-                    }
-                    switch (var) {
-                        case "Files/Customer_List_PA1.csv" -> {
-                            Customer customer = new Customer(temp.get("id"), temp.get("first name"), temp.get("last name"), temp.get("username"), temp.get("password"), temp.get("money available"), temp.get("ticketminer membership"), temp.get("concerts purchased"));
-                            customerList.put(temp.get("first name").toLowerCase() + " " + temp.get("last name").toLowerCase(), customer);
-                        }
-                        case "Files/Event_List_PA1.csv" -> {
-                            Event event = null;
-                            if (temp.get("type").equalsIgnoreCase("sport")) {
-                                event = new Sport(temp.get("id"), temp.get("type"), temp.get("name"), temp.get("date"), temp.get("time"), temp.get("vip price"), temp.get("gold price"), temp.get("silver price"), temp.get("bronze price"), temp.get("general admission price"));
-                            }
-                            //FIXME add other event types
-                            eventList.put(temp.get("id"), event);
-                        }
-                        case "Files/Venue_List_PA1.csv" -> {
-                            Venue venue = null;
-                            if (temp.get("type").equalsIgnoreCase("arena")) {
-                                venue = new Arena(temp.get("id"), temp.get("name"), temp.get("type"), temp.get("capacity"), temp.get("concert capacity"), temp.get("cost"), temp.get("vip percent"), temp.get("gold percent"), temp.get("silver percent"), temp.get("bronze percent"), temp.get("general admission percent"), temp.get("reserved extra percent"));
-                            } else if (temp.get("type").equalsIgnoreCase("stadium")) {
-                                venue = new Stadium(temp.get("id"), temp.get("name"), temp.get("type"), temp.get("capacity"), temp.get("concert capacity"), temp.get("cost"), temp.get("vip percent"), temp.get("gold percent"), temp.get("silver percent"), temp.get("bronze percent"), temp.get("general admission percent"), temp.get("reserved extra percent"));
-                            }
-                            venueList.put(temp.get("id"), venue);
-                        }
-                    }
-                    info = reader.readLine();
-                }
-            }
-        }
-    }*/
 
     /**
      * Saves transaction to ArrayList.
