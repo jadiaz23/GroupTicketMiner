@@ -7,10 +7,22 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+/**
+ * @author Jose Armando Diaz
+ * */
 
 public class openFiles {
+    /**
+     * constructor is empty
+     */
     public openFiles(){}
 
+    /**
+     *
+     * @return LinkedHashMap with another LinkedHashMap of events
+     * Creates a LinkedHashmap with the first key being the type of Event(e.g. Sport, Concert)
+     * Second key is the name of the event(e.g. UTEP Football 1)
+     */
     public LinkedHashMap<String, LinkedHashMap<String, Event>> openEventList(){ //Key(typeOfEvent, key(nameOfEvent)
         LinkedHashMap<String, LinkedHashMap<String, Event>> eventType = new LinkedHashMap<>(); //Key is of type Sport, Concert, Special
         LinkedHashMap<String, Event> sport = new LinkedHashMap<>(); //Will hold Sport
@@ -55,6 +67,11 @@ public class openFiles {
         return eventType;
 }
 
+    /**
+     *
+     * @return LinkedHashMap of CustomerList
+     * creates a LinkedHashMap of the customers
+     */
     public LinkedHashMap<String, Customer> openCustomerList(){
         LinkedHashMap<String, Customer> customer = new LinkedHashMap<>(); //Key is username
         try {
@@ -82,6 +99,11 @@ public class openFiles {
     return customer;
     }
 
+    /**
+     *
+     * @return LinkedHashMap of venues
+     * Creates a LInkedHashMap of venues provided
+     */
     public LinkedHashMap<String, Venue> openVenueList(){//Key is the ID of venue
         LinkedHashMap<String, Venue> venue = new LinkedHashMap<>();
         Venue v;
@@ -123,6 +145,11 @@ public class openFiles {
         return venue;
     }
 
+    /**
+     *
+     * @return new LinkedHashMap of events
+     * Creates a nwe LinkedHashMap of events assuming there's already an existing event list
+     */
     public LinkedHashMap<String, LinkedHashMap<String, Event>> openNewEventList(){//Assuming it already exists
         LinkedHashMap<String, LinkedHashMap<String, Event>> eventType = new LinkedHashMap<>(); //Key is of type Sport, Concert, Special
         LinkedHashMap<String, Event> sport = new LinkedHashMap<>(); //Will hold Sport
@@ -195,6 +222,13 @@ public class openFiles {
         return eventType;
     }
 
+    /**
+     *
+     * @param customer
+     * @throws IOException
+     * Creates and writes a csv file called "TicketSales" which holds new and
+     * current tickets that have been bought
+     */
     public void writingToTicketSales(LinkedHashMap<String,Customer> customer) throws IOException {
         FileWriter fw = new FileWriter("TicketSales.csv");
         try {
@@ -218,6 +252,12 @@ public class openFiles {
 
     }
 
+    /**
+     *
+     * @param customerList
+     * @param eventList
+     * Reads TicketSales.csv and checks for duplicates in eventList and customerList
+     */
     public void readTicketSales(LinkedHashMap<String,Customer> customerList, LinkedHashMap<String, LinkedHashMap<String, Event>> eventList){//save to hashmap in customer and event
         try{
             FileReader file = new FileReader("TicketSales.csv");
