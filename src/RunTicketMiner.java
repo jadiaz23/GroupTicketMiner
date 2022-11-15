@@ -495,7 +495,10 @@ public class RunTicketMiner {
     private static boolean Firework(Event event) {
         String time = event.getTime();
         int temp = Integer.parseInt(String.valueOf(time.charAt(0)));
-        if(temp >= 7){
+        char zone = time.charAt(time.length()-2);
+        char noon = 'P';
+
+        if((temp >= 7) && (zone == noon)){
             return true;
         }
         return false;
