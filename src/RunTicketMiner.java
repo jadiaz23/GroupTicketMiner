@@ -53,6 +53,7 @@ public class RunTicketMiner {
             eventList = f.openNewEventList();
         }
 
+        f.readTicketSales(customerList,eventList);
         // Start UI
 
         boolean reenter = true;

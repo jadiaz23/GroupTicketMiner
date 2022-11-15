@@ -198,7 +198,7 @@ public class openFiles {
     public void writingToTicketSales(LinkedHashMap<String,Customer> customer) throws IOException {
         FileWriter fw = new FileWriter("TicketSales.csv");
         try {
-            fw.append("Confirmation Number,Event,Venue,Date,Time,Type,Cost");
+            fw.append("Username,Confirmation Number,Event,Venue,Date,Time,TypeOfTicket,Cost");
             fw.append("\n");
 
             for (Map.Entry<String, Customer> cust : customer.entrySet()) {
@@ -206,7 +206,7 @@ public class openFiles {
                 if (c.purchased.size() >= 1) {
                     for (Map.Entry<Integer, Ticket> t : c.purchased.entrySet()) {
                         Ticket tick = t.getValue();
-                        fw.append(tick.confNum+","+tick.event+","+tick.venue+","+tick.date+","+tick.time+","+tick.type+","+tick.cost+"\n");
+                        fw.append(c.getUsername()+","+tick.confNum+","+tick.event+","+tick.venue+","+tick.date+","+tick.time+","+tick.type+","+tick.cost+"\n");
                     }
                 }
             }
@@ -215,6 +215,42 @@ public class openFiles {
         catch (Exception e){
 
         }
+
+    }
+
+    public void readTicketSales(LinkedHashMap<String,Customer> customerList, LinkedHashMap<String, LinkedHashMap<String, Event>> eventList){//save to hashmap in customer and event
+        try{
+            FileReader file = new FileReader("TicketSales.csv");
+            Scanner scanning = new Scanner(file);
+            String line = scanning.nextLine();
+
+            while (line != null){
+                line = scanning.nextLine();
+                String[] ans = line.split(","); //0 is now username
+                Ticket ticket = new Ticket(Integer.parseInt(ans[1]), ans[2],ans[3],ans[4],ans[5],ans[6],Double.parseDouble(ans[7]));
+                customerList.get(ans[0]).purchased.put(Integer.parseInt(ans[1]),ticket);
+
+                boolean exit = false;
+                for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                    HashMap<String, Event> events = list.getValue();
+                    for (Map.Entry<String, Event> entry : events.entrySet()) {
+                        Event event = entry.getValue();
+                        if (event.name.equalsIgnoreCase(ans[2])) {
+                            event.tickets.put(Integer.parseInt(ans[1]),ticket);
+                            exit = true;
+                            break;
+                        }
+                    }
+                    if (exit) {
+                        break;
+                    }
+
+                }
+
+            }
+
+        }
+        catch (Exception e){}
 
     }
 
