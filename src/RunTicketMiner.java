@@ -104,8 +104,8 @@ public class RunTicketMiner {
         String adminInput = "";
         while (!adminInput.equalsIgnoreCase("exit")) {
             System.out.println("================================================================");
-            System.out.println("Hello Administrator! How would you like to inquire an event: ");
-            System.out.println("\n\tA. Inquire via Event Name and Type of Event\n\tB. Create new event\n\tType \"exit\" to exit admin menu");
+            System.out.println("Hello Administrator! Select an option: ");
+            System.out.println("\n\tA. Inquire Event via Name and Type of Event\n\tB. Create new event\n\tC. Inspect tickets purchased by customer\n\tType \"exit\" to exit admin menu");
             adminInput = sc.nextLine();
             String adminEventInput;
             switch(adminInput){
@@ -230,6 +230,27 @@ public class RunTicketMiner {
                     Event event = eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue);
                     eventList.get(event.type).put(event.name,event);
                     break;
+                case "c":
+                case "C":
+                    System.out.println("Enter customer's username");
+                    String user = sc.nextLine();
+                    if (customerList.containsKey(user)){
+                        Customer customer = customerList.get(user);
+                        if(customer.purchased.isEmpty()){
+                            System.out.println("Customer has not bought a ticket");
+                        }
+                        else{
+                            writeCustomerTickets(customer.purchased);
+
+                            }
+                        }
+
+                        System.out.println();
+                    }
+                    else{
+                        System.out.println("Please try again!");
+                    }
+                    break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
                         System.out.println("Exiting admin menu...");
@@ -239,6 +260,23 @@ public class RunTicketMiner {
             }
         }
     }//end of admin
+
+    public static void writeCustomerTickets(LinkedHashMap<Integer, Ticket> purchased) throws IOException {
+        FileWriter fw = new FileWriter("CustomersTicket.txt");
+        try {
+            fw.append("Username,Confirmation Number,Event,Venue,Date,Time,TypeOfTicket,Cost");
+            fw.append("\n");
+
+            for (Map.Entry<Integer, Ticket> t : purchased.entrySet()) {
+                Ticket tick = t.getValue();
+                fw.append(tick.confNum+","+tick.event+","+tick.venue+","+tick.date+","+tick.time+","+tick.type+","+tick.cost+"\n");
+            }
+            fw.close();
+        }
+        catch (Exception e){
+
+        }
+    }
 
     public static Person loginCheck(){
         Scanner scan = new Scanner(System.in);
