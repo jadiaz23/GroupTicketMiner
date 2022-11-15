@@ -190,17 +190,17 @@ public class RunTicketMiner {
                     }while (true);
 
                     //FiXME left off here
-                    String venueInfo="";
+                    String venueInfo= "";
                     Venue venue;
                     System.out.println("Please enter General Admission Price. (below $500)");
                     Double genAdmPrice =sc.nextDouble();
 
-                    double ID=Math.round(Math.random()*eventInfo.size());
+                    int ID = (int) Math.round(Math.random()*eventInfo.size());
                     String strID=ID+""; //typecasting the Double to meet parameter to create Event
 
                     while(true) {
                         System.out.println("Which Venue");
-                        venueInfo = sc.nextLine();
+                        venueInfo = sc.nextLine(); //FIXME skips the first input request
                         if(venueInfo.equalsIgnoreCase("OpenAir") ){
                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
                             venue= new OpenAir(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
@@ -226,7 +226,8 @@ public class RunTicketMiner {
 
                     // construct event
                     //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
-                    eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue);
+                    Event event = eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue);
+                    eventList.get(event.type).put(event.name,event);
                     break;
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
