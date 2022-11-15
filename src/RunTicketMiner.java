@@ -98,7 +98,7 @@ public class RunTicketMiner {
         f.writingToTicketSales(customerList);//Testing TicketSales.csv
     }
 
-    public static void admin(){
+    public static void admin() throws IOException {
         EventFactory eventFactory= new EventFactory();
         Scanner sc = new Scanner(System.in);
         String adminInput = "";
@@ -240,17 +240,16 @@ public class RunTicketMiner {
                             System.out.println("Customer has not bought a ticket");
                         }
                         else{
-                            writeCustomerTickets(customer.purchased);
-
+                            writeCustomerTickets(customer.purchased, customer);
+                            System.out.println("File will be printed once program has been terminated");
                             }
-                        }
-
                         System.out.println();
                     }
                     else{
                         System.out.println("Please try again!");
                     }
                     break;
+
                 default:
                     if (adminInput.equalsIgnoreCase("exit")){
                         System.out.println("Exiting admin menu...");
@@ -261,10 +260,14 @@ public class RunTicketMiner {
         }
     }//end of admin
 
-    public static void writeCustomerTickets(LinkedHashMap<Integer, Ticket> purchased) throws IOException {
-        FileWriter fw = new FileWriter("CustomersTicket.txt");
+
+    public static void writeCustomerTickets(LinkedHashMap<Integer, Ticket> purchased, Customer customer) throws IOException {
+        FileWriter fw = new FileWriter(customer.getFirst()+customer.getLast()+"Tickets.txt");
         try {
-            fw.append("Username,Confirmation Number,Event,Venue,Date,Time,TypeOfTicket,Cost");
+            fw.append(customer.getFirst() +" "+ customer.getLast()+ "'s Ticket Summary");
+            fw.append("\n");
+            fw.append("\n");
+            fw.append("Confirmation Number,Event,Venue,Date,Time,TypeOfTicket,Cost");
             fw.append("\n");
 
             for (Map.Entry<Integer, Ticket> t : purchased.entrySet()) {
@@ -277,6 +280,7 @@ public class RunTicketMiner {
 
         }
     }
+
 
     public static Person loginCheck(){
         Scanner scan = new Scanner(System.in);
