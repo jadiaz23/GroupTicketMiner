@@ -136,13 +136,13 @@ public class RunTicketMiner {
                         System.out.println("C. Special");  //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
                         adminInput = sc.nextLine();
 
-                        if (adminInput.equalsIgnoreCase("sport")) {
+                        if (adminInput.equalsIgnoreCase("a")) {
                             eventInfo.put("type", "Sport");
                             break;
-                        } else if (adminInput.equalsIgnoreCase("concert")) {
+                        } else if (adminInput.equalsIgnoreCase("b")) {
                             eventInfo.put("type", "Concert");
                             break;
-                        } else if (adminInput.equalsIgnoreCase("special")) {
+                        } else if (adminInput.equalsIgnoreCase("c")) {
                             eventInfo.put("type", "Special");
                         } else {
                             System.out.println("Input not recognized.");
