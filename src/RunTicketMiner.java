@@ -94,7 +94,7 @@ public class RunTicketMiner {
         } while (reenter);
 
         writeFile();
-
+        f.writingToTicketSales(customerList);//Testing TicketSales.csv
     }
 
     public static void admin(){
@@ -282,7 +282,6 @@ public class RunTicketMiner {
         }
         System.out.println("Purchase Confirmation Number: " + ticket.confNum); //FIXME verify it works here
         System.out.println();
-
         event.sellTicket(ticket);
         transLog(user, ticket);
         return false;
@@ -317,30 +316,35 @@ public class RunTicketMiner {
                     if (type.equalsIgnoreCase("a")) {
                         type = "vip";
                         if (event.venue.BuyVip()){
+                            typeCost = event.vipPrice;
                             break;
                         }
                         System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("b")) {
                         type = "gold";
                         if (event.venue.BuyGold()){
+                            typeCost = event.goldPrice;
                             break;
                         }
                         System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("c")) {
                         type = "silver";
                         if (event.venue.BuySilver()){
+                            typeCost = event.silverPrice;
                             break;
                         }
                         System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("d")) {
                         type = "bronze";
                         if (event.venue.BuyBronze()){
+                            typeCost = event.bronzePrice;
                             break;
                         }
                         System.out.println("Sold Out");
                     } else if (type.equalsIgnoreCase("e")) {
                         type = "general";
                         if (event.venue.BuyGenAdmi()){
+                            typeCost = event.generalAdPrice;
                             break;
                         }
                         System.out.println("Sold Out");

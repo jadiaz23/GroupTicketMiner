@@ -1,9 +1,11 @@
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class openFiles {
@@ -193,14 +195,22 @@ public class openFiles {
         return eventType;
     }
 
-    public void makeTicketSalesCSV(){
-        try{
-            FileWriter fw = new FileWriter("TicketSales.csv");
-
+    public void writingToTicketSales(LinkedHashMap<String,Customer> customer) throws IOException {
+        FileWriter fw = new FileWriter("TicketSales.csv");
+        try {
             fw.append("Confirmation Number,Event,Venue,Date,Time,Type,Cost");
             fw.append("\n");
-            fw.close();
 
+            for (Map.Entry<String, Customer> cust : customer.entrySet()) {
+                Customer c = cust.getValue();
+                if (c.purchased.size() >= 1) {
+                    for (Map.Entry<Integer, Ticket> t : c.purchased.entrySet()) {
+                        Ticket tick = t.getValue();
+                        fw.append(tick.confNum+","+tick.event+","+tick.venue+","+tick.date+","+tick.time+","+tick.type+","+tick.cost+"\n");
+                    }
+                }
+            }
+            fw.close();
         }
         catch (Exception e){
 
