@@ -1,18 +1,51 @@
 import java.util.LinkedHashMap;
 
+/**
+ * Creates class Customer.
+ */
 class Customer implements Person {
 
+    /**
+     * The Id.
+     */
     public int ID;
+    /**
+     * The First.
+     */
     public String first;
+    /**
+     * The Last.
+     */
     public String last;
     private String username;
     private String password;
     private double money;
+    /**
+     * The Member.
+     */
     public boolean member;
+    /**
+     * The Tickets.
+     */
     public int tickets;
 
+    /**
+     * The Purchased.
+     */
     public LinkedHashMap<Integer, Ticket> purchased = new LinkedHashMap<Integer, Ticket>(); //FIXME might not need, Need to implement Ticket summary
 
+    /**
+     * Instantiates a new Customer.
+     *
+     * @param ID       the id
+     * @param first    the first
+     * @param last     the last
+     * @param username the username
+     * @param password the password
+     * @param money    the money
+     * @param member   the member
+     * @param tickets  the tickets
+     */
     public Customer(String ID, String first, String last, String username, String password, String money, String member, String tickets) {
         this.ID = Integer.parseInt(ID);
         this.first = first;
@@ -36,10 +69,20 @@ class Customer implements Person {
         return ID;
     }
 
+    /**
+     * Get first string.
+     *
+     * @return the string
+     */
     public String getFirst(){
         return first;
     }
 
+    /**
+     * Get last string.
+     *
+     * @return the string
+     */
     public String getLast(){
         return last;
     }
@@ -54,14 +97,29 @@ class Customer implements Person {
         return password;
     }
 
+    /**
+     * Get money double.
+     *
+     * @return the double
+     */
     public double getMoney(){
         return money;
     }
 
+    /**
+     * Get member boolean.
+     *
+     * @return the boolean
+     */
     public boolean getMember(){
         return member;
     }
 
+    /**
+     * Get tickets int.
+     *
+     * @return the int
+     */
     public int getTickets(){
         return tickets;
     }
@@ -73,10 +131,20 @@ class Customer implements Person {
         this.ID = ID;
     }
 
+    /**
+     * Sets first.
+     *
+     * @param first the first
+     */
     public void setFirst(String first) {
         this.first = first;
     }
 
+    /**
+     * Sets last.
+     *
+     * @param last the last
+     */
     public void setLast(String last) {
         this.last = last;
     }
@@ -91,14 +159,29 @@ class Customer implements Person {
         this.password = password;
     }
 
+    /**
+     * Set money.
+     *
+     * @param money the money
+     */
     public void setMoney(double money){
         this.money = money;
     }
 
+    /**
+     * Sets member.
+     *
+     * @param member the member
+     */
     public void setMember(boolean member) {
         this.member = member;
     }
 
+    /**
+     * Sets tickets.
+     *
+     * @param tickets the tickets
+     */
     public void setTickets(int tickets) {
         this.tickets = tickets;
     }
@@ -107,7 +190,7 @@ class Customer implements Person {
      * Adds ticket to those purchased.
      *
      * @param ticket the ticket
-     * @return  returns false if not purchased.
+     * @return returns false if not purchased.
      */
     public boolean buyTicket(Ticket ticket) {
         if (money >= ticket.cost) {
@@ -118,6 +201,9 @@ class Customer implements Person {
         return false;
     }
 
+    /**
+     * Print.
+     */
     public void print(){
         System.out.println("ID: "+getID());
         System.out.println("Name: "+getFirst()+" "+getLast());

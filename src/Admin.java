@@ -1,9 +1,15 @@
+/**
+ * Creates Admin instance from Person Interface
+ */
 public class Admin implements Person { //FIXME use interface Person for Customer and Admin
+
+    /**
+     * The User type.
+     */
     public String userType;
+
     private int ID;
 
-
-    //FIXME implement methods
 
     @Override
     public boolean login(String login) {
