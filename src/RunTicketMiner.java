@@ -195,17 +195,25 @@ public class RunTicketMiner {
                         }
                     }while (true);
 
-                    //FiXME left off here
-                    String venueInfo= "";
+                    String venueInfo;
                     Venue venue;
-                    System.out.println("Please enter General Admission Price. (below $500)");
-                    Double genAdmPrice =sc.nextDouble();
-
-                    int ID = (int) Math.round(Math.random()*eventInfo.size());
-                    String strID=ID+""; //typecasting the Double to meet parameter to create Event
-
+                    double genAdmPrice=0;
                     while(true) {
-                        System.out.println("Which Venue");
+                        System.out.println("Please enter General Admission Price. (below $500)");
+                        genAdmPrice = sc.nextDouble();
+                        if(genAdmPrice >=500) {
+                        System.out.println("Please try again!");
+                        }
+                        else {
+                        break;
+                        }
+                        }
+
+                    int ID = (int) Math.round(Math.random()*eventList.size()*10);
+                    String strID=ID+""; //typecasting the Double to meet parameter to create Event
+                    System.out.println("Type in which Venue you wish to have\n *************** ");
+                    System.out.println("-OpenAir\n-Arena\n-Auditorium\n-Stadium");
+                    while(true){
                         venueInfo = sc.nextLine(); //FIXME skips the first input request
                         if(venueInfo.equalsIgnoreCase("OpenAir") ){
                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
@@ -234,6 +242,7 @@ public class RunTicketMiner {
                     //createEvent(String id, String type, String name, String date, String time, Double genPrice, Venue venue)
                     Event event = eventFactory.createEvent(strID, eventInfo.get("type"),eventName, eventInfo.get("date"), eventInfo.get("time"),genAdmPrice, venue);
                     eventList.get(event.type).put(event.name,event);
+                    System.out.println("New Event Created!");
                     break;
                 case "c":
                 case "C":
