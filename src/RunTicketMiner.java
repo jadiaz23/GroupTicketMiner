@@ -118,9 +118,9 @@ public class RunTicketMiner {
                 case "A":
                     System.out.println("Enter Event Name (Case Sensitive)");
                     adminEventInput = sc.nextLine();
-                    System.out.println("Enter Type of Event (Case Sensitive)");
+                    System.out.println("Enter Type of Event (Sport, Concert, Special) (Case Sensitive)");
                     String event_Type=sc.nextLine();
-                    if (eventList.containsKey(event_Type) && eventList.get(event_Type).containsKey(adminEventInput)){
+                    if (eventList.get(event_Type).containsKey(adminEventInput)){
                         eventList.get(event_Type).get(adminEventInput).print();
                         System.out.println();
                     }

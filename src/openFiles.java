@@ -26,8 +26,8 @@ public class openFiles {
     public LinkedHashMap<String, LinkedHashMap<String, Event>> openEventList(){ //Key(typeOfEvent, key(nameOfEvent)
         LinkedHashMap<String, LinkedHashMap<String, Event>> eventType = new LinkedHashMap<>(); //Key is of type Sport, Concert, Special
         LinkedHashMap<String, Event> sport = new LinkedHashMap<>(); //Will hold Sport
-        LinkedHashMap<String, Event> concert = new LinkedHashMap<>(); //hold concert
-        LinkedHashMap<String, Event> special = new LinkedHashMap<>(); //hold special
+        LinkedHashMap<String, Event> concert = new LinkedHashMap<>(); //hold Concert
+        LinkedHashMap<String, Event> special = new LinkedHashMap<>(); //hold Special
 
         eventType.put("Sport", sport);
         eventType.put("Concert", concert);
@@ -43,15 +43,15 @@ public class openFiles {
                 String[] ans = line.split(",");
                 if (ans[1].equalsIgnoreCase("Sport")){
                     Event e = new Sport(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]); //e holds type of sport
-                    sport.put(ans[0], e); //Key is name of event
+                    sport.put(ans[2], e); //Key is name of event
                 }
                 else if (ans[1].equalsIgnoreCase("Concert")){
                     Event c = new Concert(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]); //c holds type Concert
-                    concert.put(ans[0],c); //Key is name of event
+                    concert.put(ans[2],c); //Key is name of event
                 }
                 else if (ans[1].equalsIgnoreCase("Special")){
                     Event s = new Special(ans[0], ans[1], ans[2], ans[3], ans[4], ans[5], ans[6], ans[7], ans[8], ans[9]);
-                    special.put(ans[0],s);
+                    special.put(ans[2],s);
                 }
 
 
