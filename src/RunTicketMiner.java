@@ -79,11 +79,11 @@ public class RunTicketMiner {
                     String letter = input.nextLine();
                     if (letter.equalsIgnoreCase("A")) {
                         Event event = findWithName(input);
-                        if (transaction(input, customer, event)) break;
+                        transaction(input, customer, event);
 
                     } else if (letter.equalsIgnoreCase("B")) {
                         Event event = findWithID(input);
-                        if (transaction(input, customer, event)) break;
+                        transaction(input, customer, event);
 
                     } else if (letter.equalsIgnoreCase("C")) {
                         break;
@@ -121,7 +121,7 @@ public class RunTicketMiner {
                     System.out.println("Enter Type of Event (Sport, Concert, Special) (Case Sensitive)");
                     String event_Type=sc.nextLine();
                     if (eventList.get(event_Type).containsKey(adminEventInput)){
-                        eventList.get(event_Type).get(adminEventInput).print();
+                        eventList.get(event_Type).get(adminEventInput).detailedPrint();
                         System.out.println();
                     }
                     else{
@@ -340,21 +340,19 @@ public class RunTicketMiner {
      * @param input the scanner
      * @param user the customer
      * @param event the event
-     * @return returns false if transaction was not completed
      */
-    private static boolean transaction(Scanner input, Customer user, Event event) {
-        if (event == null) return true;
+    private static void transaction(Scanner input, Customer user, Event event) {
+        if (event == null) return;
         Ticket ticket = purchase(input, event);
-        if (ticket == null) return true;
+        if (ticket == null) return;
         if (!user.buyTicket(ticket)) {
             System.out.println("Not enough funds.");
-            return true;
+            return;
         }
         System.out.println("Purchase Confirmation Number: " + ticket.confNum); //FIXME verify it works here
         System.out.println();
         event.sellTicket(ticket);
-        transLog(user, ticket);
-        return false;
+        transLog(user, ticket);;
     }
 
     /**
@@ -501,15 +499,17 @@ public class RunTicketMiner {
 
             if (ID.equalsIgnoreCase("back")) return null;
 
-
             for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
                 HashMap<String, Event> events = list.getValue();
-                if (events.get(ID) != null) {
-                    Event event = events.get(ID);
-                    printEvent(event);
-                    return event;
+                for (Map.Entry<String, Event> entry : events.entrySet()) {
+                    Event event = entry.getValue();
+                    if (Integer.toString(event.ID).equals(ID)) {
+                        event.print();
+                        return event;
+                    }
                 }
             }
+
             System.out.println("Event not found.");
         } while (true);
     }
@@ -530,56 +530,15 @@ public class RunTicketMiner {
 
             for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
                 HashMap<String, Event> events = list.getValue();
-                for (Map.Entry<String, Event> entry : events.entrySet()) {
-                    Event event = entry.getValue();
-                    if (event.name.equalsIgnoreCase(name)) {
-                        printEvent(event);
-                        return event;
-                    }
+                if (events.get(name) != null) {
+                    Event event = events.get(name);
+                    event.print();
+                    return event;
                 }
             }
+
             System.out.println("Event not found.");
         } while (true);
-    }
-
-    /**
-     * Print event details.
-     *
-     * @param event contains the event details
-     */
-    private static void printEvent(Event event) {
-        System.out.println("ID: " + event.ID + "\nName: " + event.name + "\nDate: " + event.date + "\nTime: "
-                + event.time + "\nType: " + event.type + "\nCapacity: " + event.venue.capacity + "\nTotal Seats Sold: " + event.venue.totalTicketsSold()
-                + "\nTotal VIP Seats Sold: " + event.venue.vipSold + "\nTotal Gold Seats Sold: " + event.venue.goldSold + "\nTotal Silver Seats Sold: "
-                + event.venue.silverSold + "\n" + " Total Bronze Seats Sold: " + event.venue.bronzeSold + "\n" + " Total General Adm Seats Sold: " + event.venue.genAdmiSold
-                + "\nTotal revenue for VIP tickets: $" + event.vipRevenue() + "\n" + " Total revenue for Gold tickets: $" + event.goldRevenue() + "\n"
-                + " Total revenue for Silver tickets: $" + event.silverRevenue() + "\nTotal revenue for Bronze tickets: $" + event.bronzeRevenue() + "\n"
-                + " Total revenue for General Admission tickets: $" + event.generalRevenue() + "\n" + " Total revenue for all tickets: $" + event.totalRevenue()
-                + "\nExpected profit (Sell Out): $" + event.expectedProfit() + "\n" + " Actual profit: $" + event.profit() + "\n");
-        if(Firework(event)){
-            System.out.println("This event includes fireworks");
-            System.out.println();
-        }
-        else{
-            System.out.println("This event does not include fireworks");
-            System.out.println();
-        }
-
-    }
-
-    /**
-     * This method checks the time and decides if fireworks are included or not
-     * @param event
-     * @return boolean
-     */
-    private static boolean Firework(Event event) {
-        String time = event.getTime();
-        int temp = Integer.parseInt(String.valueOf(time.charAt(0)));
-        char zone = time.charAt(time.length()-2);
-        String z = String.valueOf(zone);
-        String noon = "p";
-
-        return (temp >= 7) && (z.equalsIgnoreCase(noon));
     }
 
     /**

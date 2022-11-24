@@ -386,7 +386,7 @@ abstract class Event {
     }
 
     /**
-     * Print.
+     * Print event info.
      */
     public void print(){
         System.out.println("ID: "+getID());
@@ -400,6 +400,50 @@ abstract class Event {
         System.out.println("Bronze Price: "+getBronzePrice());
         System.out.println("General Admission Price: "+getGeneralAdPrice());
 
+        if (Firework()) {
+            System.out.println("This event includes fireworks");
+            System.out.println();
+        } else {
+            System.out.println("This event does not include fireworks");
+            System.out.println();
+        }
+
+    }
+    /**
+     * Print detailed event info.
+     */
+    public void detailedPrint() {
+        System.out.println("ID: " + ID + "\nName: " + name + "\nDate: " + date + "\nTime: "
+                + time + "\nType: " + type + "\nCapacity: " + venue.capacity + "\nTotal Seats Sold: " + venue.totalTicketsSold()
+                + "\nTotal VIP Seats Sold: " + venue.vipSold + "\nTotal Gold Seats Sold: " + venue.goldSold + "\nTotal Silver Seats Sold: "
+                + venue.silverSold + "\n" + " Total Bronze Seats Sold: " + venue.bronzeSold + "\n" + " Total General Adm Seats Sold: " + venue.genAdmiSold
+                + "\nTotal revenue for VIP tickets: $" + vipRevenue() + "\n" + " Total revenue for Gold tickets: $" + goldRevenue() + "\n"
+                + " Total revenue for Silver tickets: $" + silverRevenue() + "\nTotal revenue for Bronze tickets: $" + bronzeRevenue() + "\n"
+                + " Total revenue for General Admission tickets: $" + generalRevenue() + "\n" + " Total revenue for all tickets: $" + totalRevenue()
+                + "\nExpected profit (Sell Out): $" + expectedProfit() + "\n" + " Actual profit: $" + profit() + "\n");
+
+        if (Firework()) {
+            System.out.println("This event includes fireworks");
+            System.out.println();
+        } else {
+            System.out.println("This event does not include fireworks");
+            System.out.println();
+        }
+    }
+    /**
+     * This method checks the time and decides if fireworks are included or not
+     * @return boolean
+     */
+    private boolean Firework() {
+        String time = getTime();
+        int temp = Integer.parseInt(String.valueOf(time.charAt(0)));
+        char zone = time.charAt(time.length()-2);
+        String z = String.valueOf(zone);
+        String noon = "p";
+
+        return (temp >= 7) && (z.equalsIgnoreCase(noon));
     }
 
-}
+
+
+    }
