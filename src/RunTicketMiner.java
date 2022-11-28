@@ -99,10 +99,10 @@ public class RunTicketMiner {
     }
 
     /**
-     * @throws IOException
-     * This method lets the admin inquire an event by name and type, create an event, and inspect tickets purchases by customer
+     * Admin.
+     *
+     * @throws IOException This method lets the admin inquire an event by name and type, create an event, and inspect tickets purchases by customer
      */
-
     public static void admin() throws IOException {
         EventFactory eventFactory= new EventFactory();
         Scanner sc = new Scanner(System.in);
@@ -277,11 +277,11 @@ public class RunTicketMiner {
     /**
      * This methods creates and writes into a new file called "Customer's name"Tickets.txt
      * allows for different customer to print these files out, this is called on admin()
+     *
      * @param purchased list of tickets purchased by customer
-     * @param customer stores customer information
+     * @param customer  stores customer information
      * @throws IOException for writer
      */
-
     public static void writeCustomerTickets(LinkedHashMap<Integer, Ticket> purchased, Customer customer) throws IOException {
         FileWriter fw = new FileWriter(customer.getFirst()+customer.getLast()+"Tickets.txt");
         try {
@@ -306,9 +306,9 @@ public class RunTicketMiner {
      * This method asks user for UserName and Password,
      * in order to enter admin, type admin for both inputs
      * in order to exit just type "exit"
-     * @return Person
+     *
+     * @return Person person
      */
-
     public static Person loginCheck(){
         Scanner scan = new Scanner(System.in);
         while (true) {
@@ -524,7 +524,7 @@ public class RunTicketMiner {
      */
     private static Event findWithName(Scanner input) {
         do {
-            System.out.println("Enter the event name, or \"back\" to go to the previous menu.");
+            System.out.println("Enter the event name, or \"back\" to go to the previous menu. (Case Sensitive)");
             System.out.println();
             String name = input.nextLine();
 
@@ -555,7 +555,8 @@ public class RunTicketMiner {
 
     /**
      * Writes file for New_Customer_List.csv, New_Event_List_PA1.csv,Trans_Log.txt
-     *Reads files for Customer_List_PA1.csv, Event_List_PA1.csv
+     * Reads files for Customer_List_PA1.csv, Event_List_PA1.csv
+     *
      * @throws IOException the io exception
      */
     public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
