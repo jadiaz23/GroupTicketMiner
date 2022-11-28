@@ -152,6 +152,7 @@ public class RunTicketMiner {
                             break;
                         } else if (adminInput.equalsIgnoreCase("c")) {
                             eventInfo.put("type", "Special");
+                            break;
                         } else {
                             System.out.println("Input not recognized.");
                         }
