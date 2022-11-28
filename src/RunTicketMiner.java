@@ -349,6 +349,8 @@ public class RunTicketMiner {
             System.out.println("Not enough funds.");
             return;
         }
+        ticket.applySalesTax();
+        System.out.println("Price after tax: $" + ticket.cost);
         System.out.println("Purchase Confirmation Number: " + ticket.confNum); //FIXME verify it works here
         System.out.println();
         event.sellTicket(ticket);
@@ -371,7 +373,7 @@ public class RunTicketMiner {
                 String type = "";
                 double typeCost = 0;
                 do {
-                    System.out.println("Select ticket type");
+                    System.out.println("Select ticket type (Member discount and sales tax (8.25%) applied at purchase)");
                     System.out.println();
                     System.out.println("A. VIP: $" + event.vipPrice);
                     System.out.println("B. Gold: $" + event.goldPrice);

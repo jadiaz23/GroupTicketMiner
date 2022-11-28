@@ -52,4 +52,8 @@ class Ticket {
         this.cost = cost;
 
     }
+
+    public void applySalesTax() {
+        cost = Math.floor((cost * 1.0825) * 100) / 100;
+    }
 }

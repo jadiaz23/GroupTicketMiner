@@ -193,9 +193,14 @@ class Customer implements Person {
      * @return returns false if not purchased.
      */
     public boolean buyTicket(Ticket ticket) {
+
         if (money >= ticket.cost) {
             money = money - ticket.cost;
             purchased.put(ticket.confNum, ticket);
+            if (member) {
+                ticket.cost = Math.floor((ticket.cost * 0.9) * 100) / 100;
+                System.out.println("Member discount applied. New Price: " + ticket.cost);
+            }
             return true;
         }
         return false;
