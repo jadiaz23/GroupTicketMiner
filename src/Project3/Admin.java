@@ -3,7 +3,7 @@ package Project3;
 /**
  * Creates Admin instance from Person Interface
  */
-public class Admin implements Person { //FIXME use interface Person for Customer and Admin
+public class Admin implements Person {
 
     /**
      * The User type.

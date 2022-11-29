@@ -217,7 +217,7 @@ public class RunTicketMiner {
                     System.out.println("Type in which Venue you wish to have\n *************** ");
                     System.out.println("-OpenAir\n-Arena\n-Auditorium\n-Stadium");
                     while(true){
-                        venueInfo = sc.nextLine(); //FIXME skips the first input request
+                        venueInfo = sc.nextLine();
                         if(venueInfo.equalsIgnoreCase("OpenAir") ){
                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
                             venue= new OpenAir(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
@@ -354,7 +354,7 @@ public class RunTicketMiner {
         }
         ticket.applySalesTax();
         System.out.println("Price after tax: $" + ticket.cost);
-        System.out.println("Purchase Confirmation Number: " + ticket.confNum); //FIXME verify it works here
+        System.out.println("Purchase Confirmation Number: " + ticket.confNum);
         System.out.println();
         event.sellTicket(ticket);
         transLog(user, ticket);;
@@ -562,7 +562,7 @@ public class RunTicketMiner {
      *
      * @throws IOException the io exception
      */
-    public static void writeFile() throws IOException { //FIXME add new event file for capacity tracking
+    public static void writeFile() throws IOException {
         try (FileWriter writer = new FileWriter("New_Customer_List.csv")) {
             BufferedReader reader = new BufferedReader(new FileReader("Customer_List_PA1.csv"));
             String header = reader.readLine();

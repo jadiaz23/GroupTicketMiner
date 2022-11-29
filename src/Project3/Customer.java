@@ -34,7 +34,7 @@ class Customer implements Person {
     /**
      * The Purchased.
      */
-    public LinkedHashMap<Integer, Ticket> purchased = new LinkedHashMap<Integer, Ticket>(); //FIXME might not need, Need to implement Ticket summary
+    public LinkedHashMap<Integer, Ticket> purchased = new LinkedHashMap<Integer, Ticket>();
 
     /**
      * Instantiates a new Customer.
