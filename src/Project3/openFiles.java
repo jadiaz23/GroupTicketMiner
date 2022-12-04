@@ -200,21 +200,21 @@ public class openFiles {
         return eventType;
     }
 
-    private void locationType(LinkedHashMap<String, Event> special, String[] ans) {
+    private void locationType(LinkedHashMap<String, Event> eventType, String[] ans) {
         if (ans[13].equalsIgnoreCase("Arena")) {
-            special.get(ans[2]).venue = new Arena(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
+            eventType.get(ans[2]).venue = new Arena(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
         } else if (ans[13].equalsIgnoreCase("Stadium")) {
-            special.get(ans[2]).venue = new Stadium(ans[10], ans[11], ans[12], ans[13], ans[14], ans[15], "5", "10", "15", "20", "45", "5");
+            eventType.get(ans[2]).venue = new Stadium(ans[10], ans[11], ans[12], ans[13], ans[14], ans[15], "5", "10", "15", "20", "45", "5");
         } else if (ans[13].equalsIgnoreCase("Auditorium")) {
-            special.get(ans[2]).venue = new Auditorium(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
+            eventType.get(ans[2]).venue = new Auditorium(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
         } else {
-            special.get(ans[2]).venue = new OpenAir(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
+            eventType.get(ans[2]).venue = new OpenAir(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
         }
-        special.get(ans[2]).venue.vipSold = (Integer.parseInt(ans[16]));
-        special.get(ans[2]).venue.goldSold = (Integer.parseInt(ans[17]));
-        special.get(ans[2]).venue.silverSold = (Integer.parseInt(ans[18]));
-        special.get(ans[2]).venue.bronzeSold = (Integer.parseInt(ans[19]));
-        special.get(ans[2]).venue.genAdmiSold = (Integer.parseInt(ans[20]));
+        eventType.get(ans[2]).venue.vipSold = (Integer.parseInt(ans[16]));
+        eventType.get(ans[2]).venue.goldSold = (Integer.parseInt(ans[17]));
+        eventType.get(ans[2]).venue.silverSold = (Integer.parseInt(ans[18]));
+        eventType.get(ans[2]).venue.bronzeSold = (Integer.parseInt(ans[19]));
+        eventType.get(ans[2]).venue.genAdmiSold = (Integer.parseInt(ans[20]));
     }
 
     /**
