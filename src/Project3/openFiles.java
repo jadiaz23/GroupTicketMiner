@@ -190,6 +190,20 @@ public class openFiles {
                         sport.get(ans[2]).venue.bronzeSold = (Integer.parseInt(ans[19]));
                         sport.get(ans[2]).venue.genAdmiSold = (Integer.parseInt(ans[20]));
                     }
+                    else {
+                        if (ans[13].equalsIgnoreCase("Arena")) {
+                            sport.get(ans[2]).venue = new Arena(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
+                        } else if (ans[13].equalsIgnoreCase("Stadium")) {
+                            sport.get(ans[2]).venue = new Stadium(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
+                        } else {
+                            sport.get(ans[2]).venue = new OpenAir(ans[10],ans[11],ans[12],ans[13],ans[14],ans[15],"5","10","15","20","45","5");
+                        }
+                        sport.get(ans[2]).venue.vipSold = (Integer.parseInt(ans[16]));
+                        sport.get(ans[2]).venue.goldSold = (Integer.parseInt(ans[17]));
+                        sport.get(ans[2]).venue.silverSold = (Integer.parseInt(ans[18]));
+                        sport.get(ans[2]).venue.bronzeSold = (Integer.parseInt(ans[19]));
+                        sport.get(ans[2]).venue.genAdmiSold = (Integer.parseInt(ans[20]));
+                    }
 
                 }
                 else if (ans[1].equalsIgnoreCase("Concert")){

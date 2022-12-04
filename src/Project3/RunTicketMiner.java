@@ -212,32 +212,66 @@ public class RunTicketMiner {
                         }
                         }
 
-                    int ID = (int) Math.round(Math.random()*eventList.size()*10);
+
+                    Random rand = new Random();
+                    int ID;
+                    boolean cont;
+                    do {
+                        cont = true;
+                        ID = rand.nextInt(100);
+                        for (Map.Entry<String, LinkedHashMap<String, Event>> list : eventList.entrySet()) {
+                            HashMap<String, Event> events = list.getValue();
+                            for (Map.Entry<String, Event> entry : events.entrySet()) {
+                                Event event = entry.getValue();
+                                if (Integer.toString(event.ID).equals(Integer.toString(ID))) {
+                                    cont = false;
+                                    break;
+                                }
+                            }
+                        }
+                    } while (!cont);
+
+
+
                     String strID=ID+""; //typecasting the Double to meet parameter to create Event
                     System.out.println("Type in which Venue you wish to have\n *************** ");
                     System.out.println("-OpenAir\n-Arena\n-Auditorium\n-Stadium");
                     while(true){
                         venueInfo = sc.nextLine();
-                        if(venueInfo.equalsIgnoreCase("OpenAir") ){
-                           // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
-                            venue= new OpenAir(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
-                        break;
-                        }
-                        if(venueInfo.equalsIgnoreCase("Arena") ){
-                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
-                            venue= new Arena(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
+                        if (venueInfo.equalsIgnoreCase("Stadium")) {
+                                venue = new Stadium(Integer.toString(venueList.get("2").ID), venueList.get("2").name , venueList.get("2").type,
+                                        Integer.toString(venueList.get("2").capacity), Integer.toString(venueList.get("2").concertCapacity),
+                                        Double.toString(venueList.get("2").cost), Integer.toString(venueList.get("2").vipPercent),
+                                        Integer.toString(venueList.get("2").goldPercent), Integer.toString(venueList.get("2").silverPercent),
+                                        Integer.toString(venueList.get("2").bronzePercent), Integer.toString(venueList.get("2").generalAdPercent),
+                                        Integer.toString(venueList.get("2").reservedExPercent));
+                                break;
+                        } else if (venueInfo.equalsIgnoreCase("Auditorium")) {
+                            venue = new Auditorium(Integer.toString(venueList.get("3").ID), venueList.get("3").name , venueList.get("3").type,
+                                    Integer.toString(venueList.get("3").capacity), Integer.toString(venueList.get("3").concertCapacity),
+                                    Double.toString(venueList.get("3").cost), Integer.toString(venueList.get("3").vipPercent),
+                                    Integer.toString(venueList.get("3").goldPercent), Integer.toString(venueList.get("3").silverPercent),
+                                    Integer.toString(venueList.get("3").bronzePercent), Integer.toString(venueList.get("3").generalAdPercent),
+                                    Integer.toString(venueList.get("3").reservedExPercent));
+                            break;
+                        } else if (venueInfo.equalsIgnoreCase("Arena")) {
+                            venue = new OpenAir(Integer.toString(venueList.get("1").ID), venueList.get("1").name , venueList.get("1").type,
+                                    Integer.toString(venueList.get("1").capacity), Integer.toString(venueList.get("1").concertCapacity),
+                                    Double.toString(venueList.get("1").cost), Integer.toString(venueList.get("1").vipPercent),
+                                    Integer.toString(venueList.get("1").goldPercent), Integer.toString(venueList.get("1").silverPercent),
+                                    Integer.toString(venueList.get("1").bronzePercent), Integer.toString(venueList.get("1").generalAdPercent),
+                                    Integer.toString(venueList.get("1").reservedExPercent));
+                            break;
+                        } else if (venueInfo.equalsIgnoreCase("OpenAir")) {
+                            venue = new OpenAir(Integer.toString(venueList.get("4").ID), venueList.get("4").name , venueList.get("4").type,
+                                    Integer.toString(venueList.get("4").capacity), Integer.toString(venueList.get("4").concertCapacity),
+                                    Double.toString(venueList.get("4").cost), Integer.toString(venueList.get("4").vipPercent),
+                                    Integer.toString(venueList.get("4").goldPercent), Integer.toString(venueList.get("4").silverPercent),
+                                    Integer.toString(venueList.get("4").bronzePercent), Integer.toString(venueList.get("4").generalAdPercent),
+                                    Integer.toString(venueList.get("4").reservedExPercent));
                             break;
                         }
-                        if(venueInfo.equalsIgnoreCase("Auditorium") ){
-                            // OpenAir(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
-                            venue= new Auditorium(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
-                            break;
-                        }
-                        if(venueInfo.equalsIgnoreCase("Stadium") ){
-                            // Stadium(String ID, String name, String type, String capacity, String concertCap, String cost, String vipPer, String goldPer, String silverPer, String bronzePer, String genAdmi, String extra)
-                            venue= new Stadium(strID, eventName, eventInfo.get("type"), "5000", "5000","150000", "5","10", "15", "20", "45", "5");
-                            break;
-                        }
+
                     }
 
 
